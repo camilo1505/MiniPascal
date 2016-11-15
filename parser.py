@@ -6,16 +6,17 @@ import sys
 VERBOSE = 1
 
 def p_program(p):
-	'program : PROGRAM ID PCOMA USES ID PCOMA contenido'
+	'''program : PROGRAM ID PCOMA contenido
+			   | PROGRAM ID PCOMA USES ID PCOMA contenido'''
 	pass
 
 def p_contenido(p):
-	'contenido : declaracion_variables declaraciones'
+	'''contenido : declaraciones
+				 | declaracion_variables declaraciones'''
 	pass
 
 def p_declaracion_variables(p):
-	'''declaracion_variables : vacio
-							 | declaracion_variable'''
+	'declaracion_variables : declaracion_variable'
 	pass
 
 def p_declaracion_variable(p):
@@ -120,12 +121,13 @@ def p_exprecion(p):
 	
 def p_exprecion_simple(p):
 	'''exprecion_simple : signo termino 
-						| signo termino adicion exprecion_simple'''
+						| termino
+						| signo termino adicion exprecion_simple
+						| termino adicion exprecion_simple'''
 	pass
 
 def p_signo(p):
-	'''signo : vacio
-			 | MAS
+	'''signo : MAS
 			 | MENOS'''
 	pass
 
@@ -161,10 +163,6 @@ def p_operador_relacional(p):
 						   | GT
 						   | GE
 						   | LE'''
-	pass
-
-def p_vacio(p):
-	'vacio :'
 	pass
 
 def p_error(p):
