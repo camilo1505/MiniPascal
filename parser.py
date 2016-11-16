@@ -20,14 +20,14 @@ def p_declaracion_variables(p):
 	pass
 
 def p_declaracion_variable(p):
-	'''declaracion_variable : VAR dec DPUN type PCOMA
-						    | VAR dec DPUN type PCOMA declaracion_variable'''
+	'''declaracion_variable : VAR definicion DPUN type PCOMA
+						    | VAR definicion DPUN type PCOMA declaracion_variable'''
 	pass
 
-def p_dec(p):
-	'''dec : ID
-		   | ID COMA dec'''
-	pass  
+def p_definicion(p):
+	'''definicion : ID
+		   | ID COMA definicion'''
+	pass
 
 def p_type(p):
 	'''type : type_simple
@@ -55,13 +55,13 @@ def p_declaraciones(p):
 	pass
 
 def p_declaraciones_compuesta(p):
-	'declaraciones_compuesta : BEGIN decla END'
+	'declaraciones_compuesta : BEGIN cuerpo END'
 	pass
 
-def p_decla(p):
-	'''decla : declaracion 
-			 | decla declaracion'''
-	pass 
+def p_cuerpo(p):
+	'''cuerpo : declaracion
+			 | cuerpo declaracion'''
+	pass
 
 def p_declaracion(p):
 	'''declaracion : declaracion_simple
@@ -77,7 +77,8 @@ def p_declaracion_simple(p):
 def p_declaracion_estructurada(p):
 	'''declaracion_estructurada : declaraciones_compuesta
 								| declaracion_if
-								| declaracion_while'''
+								| declaracion_while
+								| declaracion_for'''
 	pass
 
 def p_declaracion_if(p):
@@ -86,8 +87,12 @@ def p_declaracion_if(p):
 	pass
 
 def p_declaracion_while(p):
-	'declaracion_while : WHILE exprecion DO declaracion'
+	'''declaracion_while : WHILE exprecion DO declaracion
+					   	 | WHILE exprecion DO declaracion BREAK'''
 	pass
+def p_declaracion_for(p):
+	'''declaracion_for : FOR ID ASIG CNUM TO DO declaracion PCOMA
+					   | FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA'''
 
 def p_asignacion(p):
 	'asignacion : ID ASIG exprecion PCOMA'
@@ -118,9 +123,9 @@ def p_exprecion(p):
 	'''exprecion : exprecion_simple
 				 | exprecion_simple operador_relacional exprecion'''
 	pass
-	
+
 def p_exprecion_simple(p):
-	'''exprecion_simple : signo termino 
+	'''exprecion_simple : signo termino
 						| termino
 						| signo termino adicion exprecion_simple
 						| termino adicion exprecion_simple'''
@@ -152,14 +157,14 @@ def p_adicion(p):
 	pass
 
 def p_multipicacion(p):
-	'''multipicacion : POR	
-					 | DIV 
+	'''multipicacion : POR
+					 | DIV
 					 | AND'''
 	pass
 
 def p_operador_relacional(p):
 	'''operador_relacional : EQ
-						   | LT 
+						   | LT
 						   | GT
 						   | GE
 						   | LE'''
@@ -173,7 +178,7 @@ def p_error(p):
 			print ("ERROR SINTACTICO EN LA LINEA: " + str(cminus_lexer.lexer.lineno))
 	else:
 		raise Exception('syntax', 'error')
-		
+
 
 parser = yacc.yacc()
 

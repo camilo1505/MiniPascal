@@ -13,7 +13,7 @@ tokens = (
 	'IF','THEN','ELSE','CASE','OF',
 
     #FUNCIONES
-    'FUNTION','RETURN',
+    'FUNCTION','RETURN',
 
     #SIMBOLOS
 
@@ -144,8 +144,8 @@ def t_OF(t):
 	r'OF|of'
 	return t
 
-def t_FUNTION(t):
-	r'FUNTION|funtion'
+def t_FUNCTION(t):
+	r'FUNCTION|function'
 	return t
 
 def t_AND(t):
@@ -225,7 +225,7 @@ def test(data, lexer):
 
 lexer = lex.lex()
 
- 
+
 if __name__ == '__main__':
 	if (len(sys.argv) > 1):
 		fin = sys.argv[1]

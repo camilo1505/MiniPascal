@@ -1,4 +1,4 @@
-Created by PLY version 3.9 (http://www.dabeaz.com/ply)
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
@@ -6,14 +6,11 @@ Unused terminals:
     DIF
     RETURN
     CASE
-    BREAK
-    TO
+    FUNCTION
     REPEAT
-    FOR
     LLAVED
     LLAVEI
     UNTIL
-    FUNTION
     DOWNTO
 
 Grammar
@@ -24,10 +21,10 @@ Rule 2     program -> PROGRAM ID PCOMA USES ID PCOMA contenido
 Rule 3     contenido -> declaraciones
 Rule 4     contenido -> declaracion_variables declaraciones
 Rule 5     declaracion_variables -> declaracion_variable
-Rule 6     declaracion_variable -> VAR dec DPUN type PCOMA
-Rule 7     declaracion_variable -> VAR dec DPUN type PCOMA declaracion_variable
-Rule 8     dec -> ID
-Rule 9     dec -> ID COMA dec
+Rule 6     declaracion_variable -> VAR definicion DPUN type PCOMA
+Rule 7     declaracion_variable -> VAR definicion DPUN type PCOMA declaracion_variable
+Rule 8     definicion -> ID
+Rule 9     definicion -> ID COMA definicion
 Rule 10    type -> type_simple
 Rule 11    type -> type_array
 Rule 12    type_array -> ARRAY CORI rango CORD OF type_simple
@@ -38,9 +35,9 @@ Rule 16    type_simple -> BOOL
 Rule 17    type_simple -> FLOAT
 Rule 18    type_simple -> CHAR
 Rule 19    declaraciones -> declaraciones_compuesta
-Rule 20    declaraciones_compuesta -> BEGIN decla END
-Rule 21    decla -> declaracion
-Rule 22    decla -> decla declaracion
+Rule 20    declaraciones_compuesta -> BEGIN cuerpo END
+Rule 21    cuerpo -> declaracion
+Rule 22    cuerpo -> cuerpo declaracion
 Rule 23    declaracion -> declaracion_simple
 Rule 24    declaracion -> declaracion_estructurada
 Rule 25    declaracion_simple -> asignacion
@@ -49,116 +46,120 @@ Rule 27    declaracion_simple -> escritura
 Rule 28    declaracion_estructurada -> declaraciones_compuesta
 Rule 29    declaracion_estructurada -> declaracion_if
 Rule 30    declaracion_estructurada -> declaracion_while
-Rule 31    declaracion_if -> IF exprecion THEN declaracion
-Rule 32    declaracion_if -> IF exprecion THEN declaracion ELSE declaracion
-Rule 33    declaracion_while -> WHILE exprecion DO declaracion
-Rule 34    asignacion -> ID ASIG exprecion PCOMA
-Rule 35    lectura -> READ PARI ID PARD PCOMA
-Rule 36    lectura -> READLN PARI ID PARD PCOMA
-Rule 37    escritura -> WRITE PARI exp PARD PCOMA
-Rule 38    escritura -> WRITELN PARI exp PARD PCOMA
-Rule 39    exp -> exprecion
-Rule 40    exp -> exprecion COMA exp
-Rule 41    exprecion -> exprecion_simple
-Rule 42    exprecion -> exprecion_simple operador_relacional exprecion
-Rule 43    exprecion_simple -> signo termino
-Rule 44    exprecion_simple -> termino
-Rule 45    exprecion_simple -> signo termino adicion exprecion_simple
-Rule 46    exprecion_simple -> termino adicion exprecion_simple
-Rule 47    signo -> MAS
-Rule 48    signo -> MENOS
-Rule 49    termino -> factor
-Rule 50    termino -> factor multipicacion termino
-Rule 51    factor -> CNUM
-Rule 52    factor -> STRING
-Rule 53    factor -> ID
-Rule 54    factor -> NUM
-Rule 55    factor -> PARI exprecion PARD
-Rule 56    factor -> NOT factor
-Rule 57    adicion -> MAS
-Rule 58    adicion -> MENOS
-Rule 59    adicion -> OR
-Rule 60    multipicacion -> POR
-Rule 61    multipicacion -> DIV
-Rule 62    multipicacion -> AND
-Rule 63    operador_relacional -> EQ
-Rule 64    operador_relacional -> LT
-Rule 65    operador_relacional -> GT
-Rule 66    operador_relacional -> GE
-Rule 67    operador_relacional -> LE
+Rule 31    declaracion_estructurada -> declaracion_for
+Rule 32    declaracion_if -> IF exprecion THEN declaracion
+Rule 33    declaracion_if -> IF exprecion THEN declaracion ELSE declaracion
+Rule 34    declaracion_while -> WHILE exprecion DO declaracion
+Rule 35    declaracion_while -> WHILE exprecion DO declaracion BREAK
+Rule 36    declaracion_for -> FOR ID ASIG CNUM TO DO declaracion PCOMA
+Rule 37    declaracion_for -> FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA
+Rule 38    asignacion -> ID ASIG exprecion PCOMA
+Rule 39    lectura -> READ PARI ID PARD PCOMA
+Rule 40    lectura -> READLN PARI ID PARD PCOMA
+Rule 41    escritura -> WRITE PARI exp PARD PCOMA
+Rule 42    escritura -> WRITELN PARI exp PARD PCOMA
+Rule 43    exp -> exprecion
+Rule 44    exp -> exprecion COMA exp
+Rule 45    exprecion -> exprecion_simple
+Rule 46    exprecion -> exprecion_simple operador_relacional exprecion
+Rule 47    exprecion_simple -> signo termino
+Rule 48    exprecion_simple -> termino
+Rule 49    exprecion_simple -> signo termino adicion exprecion_simple
+Rule 50    exprecion_simple -> termino adicion exprecion_simple
+Rule 51    signo -> MAS
+Rule 52    signo -> MENOS
+Rule 53    termino -> factor
+Rule 54    termino -> factor multipicacion termino
+Rule 55    factor -> CNUM
+Rule 56    factor -> STRING
+Rule 57    factor -> ID
+Rule 58    factor -> NUM
+Rule 59    factor -> PARI exprecion PARD
+Rule 60    factor -> NOT factor
+Rule 61    adicion -> MAS
+Rule 62    adicion -> MENOS
+Rule 63    adicion -> OR
+Rule 64    multipicacion -> POR
+Rule 65    multipicacion -> DIV
+Rule 66    multipicacion -> AND
+Rule 67    operador_relacional -> EQ
+Rule 68    operador_relacional -> LT
+Rule 69    operador_relacional -> GT
+Rule 70    operador_relacional -> GE
+Rule 71    operador_relacional -> LE
 
 Terminals, with rules where they appear
 
-AND                  : 62
+AND                  : 66
 ARRAY                : 12
-ASIG                 : 34
+ASIG                 : 36 37 38
 BEGIN                : 20
 BOOL                 : 16
-BREAK                : 
+BREAK                : 35 37
 CASE                 : 
 CHAR                 : 18
-CNUM                 : 13 13 51
-COMA                 : 9 40
+CNUM                 : 13 13 36 37 55
+COMA                 : 9 44
 CONST                : 
 CORD                 : 12
 CORI                 : 12
 DIF                  : 
-DIV                  : 61
-DO                   : 33
+DIV                  : 65
+DO                   : 34 35 36 37
 DOWNTO               : 
 DPUN                 : 6 7
-ELSE                 : 32
+ELSE                 : 33
 END                  : 20
-EQ                   : 63
+EQ                   : 67
 FLOAT                : 17
-FOR                  : 
-FUNTION              : 
-GE                   : 66
-GT                   : 65
-ID                   : 1 2 2 8 9 34 35 36 53
-IF                   : 31 32
+FOR                  : 36 37
+FUNCTION             : 
+GE                   : 70
+GT                   : 69
+ID                   : 1 2 2 8 9 36 37 38 39 40 57
+IF                   : 32 33
 INT                  : 14
-LE                   : 67
+LE                   : 71
 LLAVED               : 
 LLAVEI               : 
-LT                   : 64
-MAS                  : 47 57
-MENOS                : 48 58
-NOT                  : 56
-NUM                  : 54
+LT                   : 68
+MAS                  : 51 61
+MENOS                : 52 62
+NOT                  : 60
+NUM                  : 58
 OF                   : 12
-OR                   : 59
-PARD                 : 35 36 37 38 55
-PARI                 : 35 36 37 38 55
-PCOMA                : 1 2 2 6 7 34 35 36 37 38
-POR                  : 60
+OR                   : 63
+PARD                 : 39 40 41 42 59
+PARI                 : 39 40 41 42 59
+PCOMA                : 1 2 2 6 7 36 37 38 39 40 41 42
+POR                  : 64
 PROGRAM              : 1 2
 PUNTO                : 13 13
-READ                 : 35
-READLN               : 36
+READ                 : 39
+READLN               : 40
 REPEAT               : 
 RETURN               : 
 STR                  : 15
-STRING               : 52
-THEN                 : 31 32
-TO                   : 
+STRING               : 56
+THEN                 : 32 33
+TO                   : 36 37
 UNTIL                : 
 USES                 : 2
 VAR                  : 6 7
-WHILE                : 33
-WRITE                : 37
-WRITELN              : 38
+WHILE                : 34 35
+WRITE                : 41
+WRITELN              : 42
 error                : 
 
 Nonterminals, with rules where they appear
 
-adicion              : 45 46
+adicion              : 49 50
 asignacion           : 25
 contenido            : 1 2
-dec                  : 6 7 9
-decla                : 20 22
-declaracion          : 21 22 31 32 32 33
+cuerpo               : 20 22
+declaracion          : 21 22 32 33 33 34 35 36 37
 declaracion_estructurada : 24
+declaracion_for      : 31
 declaracion_if       : 29
 declaracion_simple   : 23
 declaracion_variable : 5 7
@@ -166,18 +167,19 @@ declaracion_variables : 4
 declaracion_while    : 30
 declaraciones        : 3 4
 declaraciones_compuesta : 19 28
+definicion           : 6 7 9
 escritura            : 27
-exp                  : 37 38 40
-exprecion            : 31 32 33 34 39 40 42 55
-exprecion_simple     : 41 42 45 46
-factor               : 49 50 56
+exp                  : 41 42 44
+exprecion            : 32 33 34 35 38 43 44 46 59
+exprecion_simple     : 45 46 49 50
+factor               : 53 54 60
 lectura              : 26
-multipicacion        : 50
-operador_relacional  : 42
+multipicacion        : 54
+operador_relacional  : 46
 program              : 0
 rango                : 12
-signo                : 43 45
-termino              : 43 44 45 46 50
+signo                : 47 49
+termino              : 47 48 49 50 54
 type                 : 6 7
 type_array           : 11
 type_simple          : 10 12
@@ -224,9 +226,9 @@ state 4
     (4) contenido -> . declaracion_variables declaraciones
     (19) declaraciones -> . declaraciones_compuesta
     (5) declaracion_variables -> . declaracion_variable
-    (20) declaraciones_compuesta -> . BEGIN decla END
-    (6) declaracion_variable -> . VAR dec DPUN type PCOMA
-    (7) declaracion_variable -> . VAR dec DPUN type PCOMA declaracion_variable
+    (20) declaraciones_compuesta -> . BEGIN cuerpo END
+    (6) declaracion_variable -> . VAR definicion DPUN type PCOMA
+    (7) declaracion_variable -> . VAR definicion DPUN type PCOMA declaracion_variable
 
     USES            shift and go to state 10
     BEGIN           shift and go to state 6
@@ -247,9 +249,9 @@ state 5
 
 state 6
 
-    (20) declaraciones_compuesta -> BEGIN . decla END
-    (21) decla -> . declaracion
-    (22) decla -> . decla declaracion
+    (20) declaraciones_compuesta -> BEGIN . cuerpo END
+    (21) cuerpo -> . declaracion
+    (22) cuerpo -> . cuerpo declaracion
     (23) declaracion -> . declaracion_simple
     (24) declaracion -> . declaracion_estructurada
     (25) declaracion_simple -> . asignacion
@@ -258,35 +260,41 @@ state 6
     (28) declaracion_estructurada -> . declaraciones_compuesta
     (29) declaracion_estructurada -> . declaracion_if
     (30) declaracion_estructurada -> . declaracion_while
-    (34) asignacion -> . ID ASIG exprecion PCOMA
-    (35) lectura -> . READ PARI ID PARD PCOMA
-    (36) lectura -> . READLN PARI ID PARD PCOMA
-    (37) escritura -> . WRITE PARI exp PARD PCOMA
-    (38) escritura -> . WRITELN PARI exp PARD PCOMA
-    (20) declaraciones_compuesta -> . BEGIN decla END
-    (31) declaracion_if -> . IF exprecion THEN declaracion
-    (32) declaracion_if -> . IF exprecion THEN declaracion ELSE declaracion
-    (33) declaracion_while -> . WHILE exprecion DO declaracion
+    (31) declaracion_estructurada -> . declaracion_for
+    (38) asignacion -> . ID ASIG exprecion PCOMA
+    (39) lectura -> . READ PARI ID PARD PCOMA
+    (40) lectura -> . READLN PARI ID PARD PCOMA
+    (41) escritura -> . WRITE PARI exp PARD PCOMA
+    (42) escritura -> . WRITELN PARI exp PARD PCOMA
+    (20) declaraciones_compuesta -> . BEGIN cuerpo END
+    (32) declaracion_if -> . IF exprecion THEN declaracion
+    (33) declaracion_if -> . IF exprecion THEN declaracion ELSE declaracion
+    (34) declaracion_while -> . WHILE exprecion DO declaracion
+    (35) declaracion_while -> . WHILE exprecion DO declaracion BREAK
+    (36) declaracion_for -> . FOR ID ASIG CNUM TO DO declaracion PCOMA
+    (37) declaracion_for -> . FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA
 
-    ID              shift and go to state 21
-    READ            shift and go to state 13
-    READLN          shift and go to state 27
-    WRITE           shift and go to state 18
-    WRITELN         shift and go to state 24
+    ID              shift and go to state 23
+    READ            shift and go to state 14
+    READLN          shift and go to state 29
+    WRITE           shift and go to state 26
+    WRITELN         shift and go to state 13
     BEGIN           shift and go to state 6
-    IF              shift and go to state 22
-    WHILE           shift and go to state 14
+    IF              shift and go to state 24
+    WHILE           shift and go to state 15
+    FOR             shift and go to state 19
 
-    declaraciones_compuesta        shift and go to state 23
-    declaracion_while              shift and go to state 15
-    asignacion                     shift and go to state 25
-    decla                          shift and go to state 26
-    lectura                        shift and go to state 17
-    declaracion_if                 shift and go to state 19
-    declaracion_simple             shift and go to state 20
-    declaracion_estructurada       shift and go to state 16
-    declaracion                    shift and go to state 28
-    escritura                      shift and go to state 29
+    declaraciones_compuesta        shift and go to state 25
+    declaracion_while              shift and go to state 16
+    asignacion                     shift and go to state 27
+    declaracion_for                shift and go to state 28
+    lectura                        shift and go to state 18
+    cuerpo                         shift and go to state 20
+    declaracion_if                 shift and go to state 21
+    declaracion_simple             shift and go to state 22
+    declaracion_estructurada       shift and go to state 17
+    declaracion                    shift and go to state 30
+    escritura                      shift and go to state 31
 
 state 7
 
@@ -313,77 +321,86 @@ state 10
 
     (2) program -> PROGRAM ID PCOMA USES . ID PCOMA contenido
 
-    ID              shift and go to state 30
+    ID              shift and go to state 32
 
 
 state 11
 
     (4) contenido -> declaracion_variables . declaraciones
     (19) declaraciones -> . declaraciones_compuesta
-    (20) declaraciones_compuesta -> . BEGIN decla END
+    (20) declaraciones_compuesta -> . BEGIN cuerpo END
 
     BEGIN           shift and go to state 6
 
-    declaraciones                  shift and go to state 31
+    declaraciones                  shift and go to state 33
     declaraciones_compuesta        shift and go to state 5
 
 state 12
 
-    (6) declaracion_variable -> VAR . dec DPUN type PCOMA
-    (7) declaracion_variable -> VAR . dec DPUN type PCOMA declaracion_variable
-    (8) dec -> . ID
-    (9) dec -> . ID COMA dec
+    (6) declaracion_variable -> VAR . definicion DPUN type PCOMA
+    (7) declaracion_variable -> VAR . definicion DPUN type PCOMA declaracion_variable
+    (8) definicion -> . ID
+    (9) definicion -> . ID COMA definicion
 
-    ID              shift and go to state 33
+    ID              shift and go to state 35
 
-    dec                            shift and go to state 32
+    definicion                     shift and go to state 34
 
 state 13
 
-    (35) lectura -> READ . PARI ID PARD PCOMA
+    (42) escritura -> WRITELN . PARI exp PARD PCOMA
 
-    PARI            shift and go to state 34
+    PARI            shift and go to state 36
 
 
 state 14
 
-    (33) declaracion_while -> WHILE . exprecion DO declaracion
-    (41) exprecion -> . exprecion_simple
-    (42) exprecion -> . exprecion_simple operador_relacional exprecion
-    (43) exprecion_simple -> . signo termino
-    (44) exprecion_simple -> . termino
-    (45) exprecion_simple -> . signo termino adicion exprecion_simple
-    (46) exprecion_simple -> . termino adicion exprecion_simple
-    (47) signo -> . MAS
-    (48) signo -> . MENOS
-    (49) termino -> . factor
-    (50) termino -> . factor multipicacion termino
-    (51) factor -> . CNUM
-    (52) factor -> . STRING
-    (53) factor -> . ID
-    (54) factor -> . NUM
-    (55) factor -> . PARI exprecion PARD
-    (56) factor -> . NOT factor
+    (39) lectura -> READ . PARI ID PARD PCOMA
 
-    MAS             shift and go to state 35
-    MENOS           shift and go to state 41
-    CNUM            shift and go to state 37
-    STRING          shift and go to state 36
-    ID              shift and go to state 47
-    NUM             shift and go to state 45
-    PARI            shift and go to state 46
-    NOT             shift and go to state 44
+    PARI            shift and go to state 37
 
-    exprecion_simple               shift and go to state 38
-    signo                          shift and go to state 39
-    exprecion                      shift and go to state 40
-    termino                        shift and go to state 42
-    factor                         shift and go to state 43
 
 state 15
 
+    (34) declaracion_while -> WHILE . exprecion DO declaracion
+    (35) declaracion_while -> WHILE . exprecion DO declaracion BREAK
+    (45) exprecion -> . exprecion_simple
+    (46) exprecion -> . exprecion_simple operador_relacional exprecion
+    (47) exprecion_simple -> . signo termino
+    (48) exprecion_simple -> . termino
+    (49) exprecion_simple -> . signo termino adicion exprecion_simple
+    (50) exprecion_simple -> . termino adicion exprecion_simple
+    (51) signo -> . MAS
+    (52) signo -> . MENOS
+    (53) termino -> . factor
+    (54) termino -> . factor multipicacion termino
+    (55) factor -> . CNUM
+    (56) factor -> . STRING
+    (57) factor -> . ID
+    (58) factor -> . NUM
+    (59) factor -> . PARI exprecion PARD
+    (60) factor -> . NOT factor
+
+    MAS             shift and go to state 38
+    MENOS           shift and go to state 44
+    CNUM            shift and go to state 40
+    STRING          shift and go to state 39
+    ID              shift and go to state 49
+    NUM             shift and go to state 47
+    PARI            shift and go to state 48
+    NOT             shift and go to state 46
+
+    exprecion_simple               shift and go to state 41
+    signo                          shift and go to state 42
+    exprecion                      shift and go to state 43
+    termino                        shift and go to state 50
+    factor                         shift and go to state 45
+
+state 16
+
     (30) declaracion_estructurada -> declaracion_while .
 
+    BREAK           reduce using rule 30 (declaracion_estructurada -> declaracion_while .)
     END             reduce using rule 30 (declaracion_estructurada -> declaracion_while .)
     ID              reduce using rule 30 (declaracion_estructurada -> declaracion_while .)
     READ            reduce using rule 30 (declaracion_estructurada -> declaracion_while .)
@@ -393,13 +410,17 @@ state 15
     BEGIN           reduce using rule 30 (declaracion_estructurada -> declaracion_while .)
     IF              reduce using rule 30 (declaracion_estructurada -> declaracion_while .)
     WHILE           reduce using rule 30 (declaracion_estructurada -> declaracion_while .)
+    FOR             reduce using rule 30 (declaracion_estructurada -> declaracion_while .)
     ELSE            reduce using rule 30 (declaracion_estructurada -> declaracion_while .)
+    PCOMA           reduce using rule 30 (declaracion_estructurada -> declaracion_while .)
 
 
-state 16
+state 17
 
     (24) declaracion -> declaracion_estructurada .
 
+    PCOMA           reduce using rule 24 (declaracion -> declaracion_estructurada .)
+    BREAK           reduce using rule 24 (declaracion -> declaracion_estructurada .)
     END             reduce using rule 24 (declaracion -> declaracion_estructurada .)
     ID              reduce using rule 24 (declaracion -> declaracion_estructurada .)
     READ            reduce using rule 24 (declaracion -> declaracion_estructurada .)
@@ -409,13 +430,15 @@ state 16
     BEGIN           reduce using rule 24 (declaracion -> declaracion_estructurada .)
     IF              reduce using rule 24 (declaracion -> declaracion_estructurada .)
     WHILE           reduce using rule 24 (declaracion -> declaracion_estructurada .)
+    FOR             reduce using rule 24 (declaracion -> declaracion_estructurada .)
     ELSE            reduce using rule 24 (declaracion -> declaracion_estructurada .)
 
 
-state 17
+state 18
 
     (26) declaracion_simple -> lectura .
 
+    BREAK           reduce using rule 26 (declaracion_simple -> lectura .)
     END             reduce using rule 26 (declaracion_simple -> lectura .)
     ID              reduce using rule 26 (declaracion_simple -> lectura .)
     READ            reduce using rule 26 (declaracion_simple -> lectura .)
@@ -425,20 +448,72 @@ state 17
     BEGIN           reduce using rule 26 (declaracion_simple -> lectura .)
     IF              reduce using rule 26 (declaracion_simple -> lectura .)
     WHILE           reduce using rule 26 (declaracion_simple -> lectura .)
+    FOR             reduce using rule 26 (declaracion_simple -> lectura .)
     ELSE            reduce using rule 26 (declaracion_simple -> lectura .)
-
-
-state 18
-
-    (37) escritura -> WRITE . PARI exp PARD PCOMA
-
-    PARI            shift and go to state 48
+    PCOMA           reduce using rule 26 (declaracion_simple -> lectura .)
 
 
 state 19
 
+    (36) declaracion_for -> FOR . ID ASIG CNUM TO DO declaracion PCOMA
+    (37) declaracion_for -> FOR . ID ASIG CNUM TO DO declaracion BREAK PCOMA
+
+    ID              shift and go to state 51
+
+
+state 20
+
+    (20) declaraciones_compuesta -> BEGIN cuerpo . END
+    (22) cuerpo -> cuerpo . declaracion
+    (23) declaracion -> . declaracion_simple
+    (24) declaracion -> . declaracion_estructurada
+    (25) declaracion_simple -> . asignacion
+    (26) declaracion_simple -> . lectura
+    (27) declaracion_simple -> . escritura
+    (28) declaracion_estructurada -> . declaraciones_compuesta
+    (29) declaracion_estructurada -> . declaracion_if
+    (30) declaracion_estructurada -> . declaracion_while
+    (31) declaracion_estructurada -> . declaracion_for
+    (38) asignacion -> . ID ASIG exprecion PCOMA
+    (39) lectura -> . READ PARI ID PARD PCOMA
+    (40) lectura -> . READLN PARI ID PARD PCOMA
+    (41) escritura -> . WRITE PARI exp PARD PCOMA
+    (42) escritura -> . WRITELN PARI exp PARD PCOMA
+    (20) declaraciones_compuesta -> . BEGIN cuerpo END
+    (32) declaracion_if -> . IF exprecion THEN declaracion
+    (33) declaracion_if -> . IF exprecion THEN declaracion ELSE declaracion
+    (34) declaracion_while -> . WHILE exprecion DO declaracion
+    (35) declaracion_while -> . WHILE exprecion DO declaracion BREAK
+    (36) declaracion_for -> . FOR ID ASIG CNUM TO DO declaracion PCOMA
+    (37) declaracion_for -> . FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA
+
+    END             shift and go to state 52
+    ID              shift and go to state 23
+    READ            shift and go to state 14
+    READLN          shift and go to state 29
+    WRITE           shift and go to state 26
+    WRITELN         shift and go to state 13
+    BEGIN           shift and go to state 6
+    IF              shift and go to state 24
+    WHILE           shift and go to state 15
+    FOR             shift and go to state 19
+
+    declaraciones_compuesta        shift and go to state 25
+    declaracion_while              shift and go to state 16
+    asignacion                     shift and go to state 27
+    declaracion_for                shift and go to state 28
+    lectura                        shift and go to state 18
+    declaracion_if                 shift and go to state 21
+    declaracion_simple             shift and go to state 22
+    declaracion_estructurada       shift and go to state 17
+    declaracion                    shift and go to state 53
+    escritura                      shift and go to state 31
+
+state 21
+
     (29) declaracion_estructurada -> declaracion_if .
 
+    BREAK           reduce using rule 29 (declaracion_estructurada -> declaracion_if .)
     END             reduce using rule 29 (declaracion_estructurada -> declaracion_if .)
     ID              reduce using rule 29 (declaracion_estructurada -> declaracion_if .)
     READ            reduce using rule 29 (declaracion_estructurada -> declaracion_if .)
@@ -448,13 +523,17 @@ state 19
     BEGIN           reduce using rule 29 (declaracion_estructurada -> declaracion_if .)
     IF              reduce using rule 29 (declaracion_estructurada -> declaracion_if .)
     WHILE           reduce using rule 29 (declaracion_estructurada -> declaracion_if .)
+    FOR             reduce using rule 29 (declaracion_estructurada -> declaracion_if .)
     ELSE            reduce using rule 29 (declaracion_estructurada -> declaracion_if .)
+    PCOMA           reduce using rule 29 (declaracion_estructurada -> declaracion_if .)
 
 
-state 20
+state 22
 
     (23) declaracion -> declaracion_simple .
 
+    PCOMA           reduce using rule 23 (declaracion -> declaracion_simple .)
+    BREAK           reduce using rule 23 (declaracion -> declaracion_simple .)
     END             reduce using rule 23 (declaracion -> declaracion_simple .)
     ID              reduce using rule 23 (declaracion -> declaracion_simple .)
     READ            reduce using rule 23 (declaracion -> declaracion_simple .)
@@ -464,56 +543,58 @@ state 20
     BEGIN           reduce using rule 23 (declaracion -> declaracion_simple .)
     IF              reduce using rule 23 (declaracion -> declaracion_simple .)
     WHILE           reduce using rule 23 (declaracion -> declaracion_simple .)
+    FOR             reduce using rule 23 (declaracion -> declaracion_simple .)
     ELSE            reduce using rule 23 (declaracion -> declaracion_simple .)
 
 
-state 21
-
-    (34) asignacion -> ID . ASIG exprecion PCOMA
-
-    ASIG            shift and go to state 49
-
-
-state 22
-
-    (31) declaracion_if -> IF . exprecion THEN declaracion
-    (32) declaracion_if -> IF . exprecion THEN declaracion ELSE declaracion
-    (41) exprecion -> . exprecion_simple
-    (42) exprecion -> . exprecion_simple operador_relacional exprecion
-    (43) exprecion_simple -> . signo termino
-    (44) exprecion_simple -> . termino
-    (45) exprecion_simple -> . signo termino adicion exprecion_simple
-    (46) exprecion_simple -> . termino adicion exprecion_simple
-    (47) signo -> . MAS
-    (48) signo -> . MENOS
-    (49) termino -> . factor
-    (50) termino -> . factor multipicacion termino
-    (51) factor -> . CNUM
-    (52) factor -> . STRING
-    (53) factor -> . ID
-    (54) factor -> . NUM
-    (55) factor -> . PARI exprecion PARD
-    (56) factor -> . NOT factor
-
-    MAS             shift and go to state 35
-    MENOS           shift and go to state 41
-    CNUM            shift and go to state 37
-    STRING          shift and go to state 36
-    ID              shift and go to state 47
-    NUM             shift and go to state 45
-    PARI            shift and go to state 46
-    NOT             shift and go to state 44
-
-    exprecion_simple               shift and go to state 38
-    signo                          shift and go to state 39
-    exprecion                      shift and go to state 50
-    termino                        shift and go to state 42
-    factor                         shift and go to state 43
-
 state 23
+
+    (38) asignacion -> ID . ASIG exprecion PCOMA
+
+    ASIG            shift and go to state 54
+
+
+state 24
+
+    (32) declaracion_if -> IF . exprecion THEN declaracion
+    (33) declaracion_if -> IF . exprecion THEN declaracion ELSE declaracion
+    (45) exprecion -> . exprecion_simple
+    (46) exprecion -> . exprecion_simple operador_relacional exprecion
+    (47) exprecion_simple -> . signo termino
+    (48) exprecion_simple -> . termino
+    (49) exprecion_simple -> . signo termino adicion exprecion_simple
+    (50) exprecion_simple -> . termino adicion exprecion_simple
+    (51) signo -> . MAS
+    (52) signo -> . MENOS
+    (53) termino -> . factor
+    (54) termino -> . factor multipicacion termino
+    (55) factor -> . CNUM
+    (56) factor -> . STRING
+    (57) factor -> . ID
+    (58) factor -> . NUM
+    (59) factor -> . PARI exprecion PARD
+    (60) factor -> . NOT factor
+
+    MAS             shift and go to state 38
+    MENOS           shift and go to state 44
+    CNUM            shift and go to state 40
+    STRING          shift and go to state 39
+    ID              shift and go to state 49
+    NUM             shift and go to state 47
+    PARI            shift and go to state 48
+    NOT             shift and go to state 46
+
+    exprecion_simple               shift and go to state 41
+    signo                          shift and go to state 42
+    exprecion                      shift and go to state 55
+    termino                        shift and go to state 50
+    factor                         shift and go to state 45
+
+state 25
 
     (28) declaracion_estructurada -> declaraciones_compuesta .
 
+    BREAK           reduce using rule 28 (declaracion_estructurada -> declaraciones_compuesta .)
     END             reduce using rule 28 (declaracion_estructurada -> declaraciones_compuesta .)
     ID              reduce using rule 28 (declaracion_estructurada -> declaraciones_compuesta .)
     READ            reduce using rule 28 (declaracion_estructurada -> declaraciones_compuesta .)
@@ -523,20 +604,23 @@ state 23
     BEGIN           reduce using rule 28 (declaracion_estructurada -> declaraciones_compuesta .)
     IF              reduce using rule 28 (declaracion_estructurada -> declaraciones_compuesta .)
     WHILE           reduce using rule 28 (declaracion_estructurada -> declaraciones_compuesta .)
+    FOR             reduce using rule 28 (declaracion_estructurada -> declaraciones_compuesta .)
     ELSE            reduce using rule 28 (declaracion_estructurada -> declaraciones_compuesta .)
+    PCOMA           reduce using rule 28 (declaracion_estructurada -> declaraciones_compuesta .)
 
 
-state 24
+state 26
 
-    (38) escritura -> WRITELN . PARI exp PARD PCOMA
+    (41) escritura -> WRITE . PARI exp PARD PCOMA
 
-    PARI            shift and go to state 51
+    PARI            shift and go to state 56
 
 
-state 25
+state 27
 
     (25) declaracion_simple -> asignacion .
 
+    BREAK           reduce using rule 25 (declaracion_simple -> asignacion .)
     END             reduce using rule 25 (declaracion_simple -> asignacion .)
     ID              reduce using rule 25 (declaracion_simple -> asignacion .)
     READ            reduce using rule 25 (declaracion_simple -> asignacion .)
@@ -546,77 +630,58 @@ state 25
     BEGIN           reduce using rule 25 (declaracion_simple -> asignacion .)
     IF              reduce using rule 25 (declaracion_simple -> asignacion .)
     WHILE           reduce using rule 25 (declaracion_simple -> asignacion .)
+    FOR             reduce using rule 25 (declaracion_simple -> asignacion .)
     ELSE            reduce using rule 25 (declaracion_simple -> asignacion .)
-
-
-state 26
-
-    (20) declaraciones_compuesta -> BEGIN decla . END
-    (22) decla -> decla . declaracion
-    (23) declaracion -> . declaracion_simple
-    (24) declaracion -> . declaracion_estructurada
-    (25) declaracion_simple -> . asignacion
-    (26) declaracion_simple -> . lectura
-    (27) declaracion_simple -> . escritura
-    (28) declaracion_estructurada -> . declaraciones_compuesta
-    (29) declaracion_estructurada -> . declaracion_if
-    (30) declaracion_estructurada -> . declaracion_while
-    (34) asignacion -> . ID ASIG exprecion PCOMA
-    (35) lectura -> . READ PARI ID PARD PCOMA
-    (36) lectura -> . READLN PARI ID PARD PCOMA
-    (37) escritura -> . WRITE PARI exp PARD PCOMA
-    (38) escritura -> . WRITELN PARI exp PARD PCOMA
-    (20) declaraciones_compuesta -> . BEGIN decla END
-    (31) declaracion_if -> . IF exprecion THEN declaracion
-    (32) declaracion_if -> . IF exprecion THEN declaracion ELSE declaracion
-    (33) declaracion_while -> . WHILE exprecion DO declaracion
-
-    END             shift and go to state 52
-    ID              shift and go to state 21
-    READ            shift and go to state 13
-    READLN          shift and go to state 27
-    WRITE           shift and go to state 18
-    WRITELN         shift and go to state 24
-    BEGIN           shift and go to state 6
-    IF              shift and go to state 22
-    WHILE           shift and go to state 14
-
-    declaraciones_compuesta        shift and go to state 23
-    declaracion_while              shift and go to state 15
-    asignacion                     shift and go to state 25
-    lectura                        shift and go to state 17
-    declaracion_if                 shift and go to state 19
-    declaracion_simple             shift and go to state 20
-    declaracion_estructurada       shift and go to state 16
-    declaracion                    shift and go to state 53
-    escritura                      shift and go to state 29
-
-state 27
-
-    (36) lectura -> READLN . PARI ID PARD PCOMA
-
-    PARI            shift and go to state 54
+    PCOMA           reduce using rule 25 (declaracion_simple -> asignacion .)
 
 
 state 28
 
-    (21) decla -> declaracion .
+    (31) declaracion_estructurada -> declaracion_for .
 
-    END             reduce using rule 21 (decla -> declaracion .)
-    ID              reduce using rule 21 (decla -> declaracion .)
-    READ            reduce using rule 21 (decla -> declaracion .)
-    READLN          reduce using rule 21 (decla -> declaracion .)
-    WRITE           reduce using rule 21 (decla -> declaracion .)
-    WRITELN         reduce using rule 21 (decla -> declaracion .)
-    BEGIN           reduce using rule 21 (decla -> declaracion .)
-    IF              reduce using rule 21 (decla -> declaracion .)
-    WHILE           reduce using rule 21 (decla -> declaracion .)
+    BREAK           reduce using rule 31 (declaracion_estructurada -> declaracion_for .)
+    END             reduce using rule 31 (declaracion_estructurada -> declaracion_for .)
+    ID              reduce using rule 31 (declaracion_estructurada -> declaracion_for .)
+    READ            reduce using rule 31 (declaracion_estructurada -> declaracion_for .)
+    READLN          reduce using rule 31 (declaracion_estructurada -> declaracion_for .)
+    WRITE           reduce using rule 31 (declaracion_estructurada -> declaracion_for .)
+    WRITELN         reduce using rule 31 (declaracion_estructurada -> declaracion_for .)
+    BEGIN           reduce using rule 31 (declaracion_estructurada -> declaracion_for .)
+    IF              reduce using rule 31 (declaracion_estructurada -> declaracion_for .)
+    WHILE           reduce using rule 31 (declaracion_estructurada -> declaracion_for .)
+    FOR             reduce using rule 31 (declaracion_estructurada -> declaracion_for .)
+    ELSE            reduce using rule 31 (declaracion_estructurada -> declaracion_for .)
+    PCOMA           reduce using rule 31 (declaracion_estructurada -> declaracion_for .)
 
 
 state 29
 
+    (40) lectura -> READLN . PARI ID PARD PCOMA
+
+    PARI            shift and go to state 57
+
+
+state 30
+
+    (21) cuerpo -> declaracion .
+
+    END             reduce using rule 21 (cuerpo -> declaracion .)
+    ID              reduce using rule 21 (cuerpo -> declaracion .)
+    READ            reduce using rule 21 (cuerpo -> declaracion .)
+    READLN          reduce using rule 21 (cuerpo -> declaracion .)
+    WRITE           reduce using rule 21 (cuerpo -> declaracion .)
+    WRITELN         reduce using rule 21 (cuerpo -> declaracion .)
+    BEGIN           reduce using rule 21 (cuerpo -> declaracion .)
+    IF              reduce using rule 21 (cuerpo -> declaracion .)
+    WHILE           reduce using rule 21 (cuerpo -> declaracion .)
+    FOR             reduce using rule 21 (cuerpo -> declaracion .)
+
+
+state 31
+
     (27) declaracion_simple -> escritura .
 
+    BREAK           reduce using rule 27 (declaracion_simple -> escritura .)
     END             reduce using rule 27 (declaracion_simple -> escritura .)
     ID              reduce using rule 27 (declaracion_simple -> escritura .)
     READ            reduce using rule 27 (declaracion_simple -> escritura .)
@@ -626,499 +691,514 @@ state 29
     BEGIN           reduce using rule 27 (declaracion_simple -> escritura .)
     IF              reduce using rule 27 (declaracion_simple -> escritura .)
     WHILE           reduce using rule 27 (declaracion_simple -> escritura .)
+    FOR             reduce using rule 27 (declaracion_simple -> escritura .)
     ELSE            reduce using rule 27 (declaracion_simple -> escritura .)
+    PCOMA           reduce using rule 27 (declaracion_simple -> escritura .)
 
 
-state 30
+state 32
 
     (2) program -> PROGRAM ID PCOMA USES ID . PCOMA contenido
 
-    PCOMA           shift and go to state 55
+    PCOMA           shift and go to state 58
 
 
-state 31
+state 33
 
     (4) contenido -> declaracion_variables declaraciones .
 
     $end            reduce using rule 4 (contenido -> declaracion_variables declaraciones .)
 
 
-state 32
-
-    (6) declaracion_variable -> VAR dec . DPUN type PCOMA
-    (7) declaracion_variable -> VAR dec . DPUN type PCOMA declaracion_variable
-
-    DPUN            shift and go to state 56
-
-
-state 33
-
-    (8) dec -> ID .
-    (9) dec -> ID . COMA dec
-
-    DPUN            reduce using rule 8 (dec -> ID .)
-    COMA            shift and go to state 57
-
-
 state 34
 
-    (35) lectura -> READ PARI . ID PARD PCOMA
+    (6) declaracion_variable -> VAR definicion . DPUN type PCOMA
+    (7) declaracion_variable -> VAR definicion . DPUN type PCOMA declaracion_variable
 
-    ID              shift and go to state 58
+    DPUN            shift and go to state 59
 
 
 state 35
 
-    (47) signo -> MAS .
+    (8) definicion -> ID .
+    (9) definicion -> ID . COMA definicion
 
-    CNUM            reduce using rule 47 (signo -> MAS .)
-    STRING          reduce using rule 47 (signo -> MAS .)
-    ID              reduce using rule 47 (signo -> MAS .)
-    NUM             reduce using rule 47 (signo -> MAS .)
-    PARI            reduce using rule 47 (signo -> MAS .)
-    NOT             reduce using rule 47 (signo -> MAS .)
+    DPUN            reduce using rule 8 (definicion -> ID .)
+    COMA            shift and go to state 60
 
 
 state 36
 
-    (52) factor -> STRING .
+    (42) escritura -> WRITELN PARI . exp PARD PCOMA
+    (43) exp -> . exprecion
+    (44) exp -> . exprecion COMA exp
+    (45) exprecion -> . exprecion_simple
+    (46) exprecion -> . exprecion_simple operador_relacional exprecion
+    (47) exprecion_simple -> . signo termino
+    (48) exprecion_simple -> . termino
+    (49) exprecion_simple -> . signo termino adicion exprecion_simple
+    (50) exprecion_simple -> . termino adicion exprecion_simple
+    (51) signo -> . MAS
+    (52) signo -> . MENOS
+    (53) termino -> . factor
+    (54) termino -> . factor multipicacion termino
+    (55) factor -> . CNUM
+    (56) factor -> . STRING
+    (57) factor -> . ID
+    (58) factor -> . NUM
+    (59) factor -> . PARI exprecion PARD
+    (60) factor -> . NOT factor
 
-    POR             reduce using rule 52 (factor -> STRING .)
-    DIV             reduce using rule 52 (factor -> STRING .)
-    AND             reduce using rule 52 (factor -> STRING .)
-    MAS             reduce using rule 52 (factor -> STRING .)
-    MENOS           reduce using rule 52 (factor -> STRING .)
-    OR              reduce using rule 52 (factor -> STRING .)
-    EQ              reduce using rule 52 (factor -> STRING .)
-    LT              reduce using rule 52 (factor -> STRING .)
-    GT              reduce using rule 52 (factor -> STRING .)
-    GE              reduce using rule 52 (factor -> STRING .)
-    LE              reduce using rule 52 (factor -> STRING .)
-    COMA            reduce using rule 52 (factor -> STRING .)
-    PARD            reduce using rule 52 (factor -> STRING .)
-    THEN            reduce using rule 52 (factor -> STRING .)
-    DO              reduce using rule 52 (factor -> STRING .)
-    PCOMA           reduce using rule 52 (factor -> STRING .)
+    MAS             shift and go to state 38
+    MENOS           shift and go to state 44
+    CNUM            shift and go to state 40
+    STRING          shift and go to state 39
+    ID              shift and go to state 49
+    NUM             shift and go to state 47
+    PARI            shift and go to state 48
+    NOT             shift and go to state 46
 
+    exprecion_simple               shift and go to state 41
+    signo                          shift and go to state 42
+    exprecion                      shift and go to state 61
+    termino                        shift and go to state 50
+    exp                            shift and go to state 62
+    factor                         shift and go to state 45
 
 state 37
 
-    (51) factor -> CNUM .
+    (39) lectura -> READ PARI . ID PARD PCOMA
 
-    POR             reduce using rule 51 (factor -> CNUM .)
-    DIV             reduce using rule 51 (factor -> CNUM .)
-    AND             reduce using rule 51 (factor -> CNUM .)
-    MAS             reduce using rule 51 (factor -> CNUM .)
-    MENOS           reduce using rule 51 (factor -> CNUM .)
-    OR              reduce using rule 51 (factor -> CNUM .)
-    EQ              reduce using rule 51 (factor -> CNUM .)
-    LT              reduce using rule 51 (factor -> CNUM .)
-    GT              reduce using rule 51 (factor -> CNUM .)
-    GE              reduce using rule 51 (factor -> CNUM .)
-    LE              reduce using rule 51 (factor -> CNUM .)
-    COMA            reduce using rule 51 (factor -> CNUM .)
-    PARD            reduce using rule 51 (factor -> CNUM .)
-    THEN            reduce using rule 51 (factor -> CNUM .)
-    DO              reduce using rule 51 (factor -> CNUM .)
-    PCOMA           reduce using rule 51 (factor -> CNUM .)
+    ID              shift and go to state 63
 
 
 state 38
 
-    (41) exprecion -> exprecion_simple .
-    (42) exprecion -> exprecion_simple . operador_relacional exprecion
-    (63) operador_relacional -> . EQ
-    (64) operador_relacional -> . LT
-    (65) operador_relacional -> . GT
-    (66) operador_relacional -> . GE
-    (67) operador_relacional -> . LE
+    (51) signo -> MAS .
 
-    DO              reduce using rule 41 (exprecion -> exprecion_simple .)
-    PARD            reduce using rule 41 (exprecion -> exprecion_simple .)
-    THEN            reduce using rule 41 (exprecion -> exprecion_simple .)
-    COMA            reduce using rule 41 (exprecion -> exprecion_simple .)
-    PCOMA           reduce using rule 41 (exprecion -> exprecion_simple .)
-    EQ              shift and go to state 64
-    LT              shift and go to state 62
-    GT              shift and go to state 59
-    GE              shift and go to state 60
-    LE              shift and go to state 63
+    CNUM            reduce using rule 51 (signo -> MAS .)
+    STRING          reduce using rule 51 (signo -> MAS .)
+    ID              reduce using rule 51 (signo -> MAS .)
+    NUM             reduce using rule 51 (signo -> MAS .)
+    PARI            reduce using rule 51 (signo -> MAS .)
+    NOT             reduce using rule 51 (signo -> MAS .)
 
-    operador_relacional            shift and go to state 61
 
 state 39
 
-    (43) exprecion_simple -> signo . termino
-    (45) exprecion_simple -> signo . termino adicion exprecion_simple
-    (49) termino -> . factor
-    (50) termino -> . factor multipicacion termino
-    (51) factor -> . CNUM
-    (52) factor -> . STRING
-    (53) factor -> . ID
-    (54) factor -> . NUM
-    (55) factor -> . PARI exprecion PARD
-    (56) factor -> . NOT factor
+    (56) factor -> STRING .
 
-    CNUM            shift and go to state 37
-    STRING          shift and go to state 36
-    ID              shift and go to state 47
-    NUM             shift and go to state 45
-    PARI            shift and go to state 46
-    NOT             shift and go to state 44
+    POR             reduce using rule 56 (factor -> STRING .)
+    DIV             reduce using rule 56 (factor -> STRING .)
+    AND             reduce using rule 56 (factor -> STRING .)
+    MAS             reduce using rule 56 (factor -> STRING .)
+    MENOS           reduce using rule 56 (factor -> STRING .)
+    OR              reduce using rule 56 (factor -> STRING .)
+    EQ              reduce using rule 56 (factor -> STRING .)
+    LT              reduce using rule 56 (factor -> STRING .)
+    GT              reduce using rule 56 (factor -> STRING .)
+    GE              reduce using rule 56 (factor -> STRING .)
+    LE              reduce using rule 56 (factor -> STRING .)
+    PCOMA           reduce using rule 56 (factor -> STRING .)
+    THEN            reduce using rule 56 (factor -> STRING .)
+    COMA            reduce using rule 56 (factor -> STRING .)
+    PARD            reduce using rule 56 (factor -> STRING .)
+    DO              reduce using rule 56 (factor -> STRING .)
 
-    termino                        shift and go to state 65
-    factor                         shift and go to state 43
 
 state 40
 
-    (33) declaracion_while -> WHILE exprecion . DO declaracion
+    (55) factor -> CNUM .
 
-    DO              shift and go to state 66
+    POR             reduce using rule 55 (factor -> CNUM .)
+    DIV             reduce using rule 55 (factor -> CNUM .)
+    AND             reduce using rule 55 (factor -> CNUM .)
+    MAS             reduce using rule 55 (factor -> CNUM .)
+    MENOS           reduce using rule 55 (factor -> CNUM .)
+    OR              reduce using rule 55 (factor -> CNUM .)
+    EQ              reduce using rule 55 (factor -> CNUM .)
+    LT              reduce using rule 55 (factor -> CNUM .)
+    GT              reduce using rule 55 (factor -> CNUM .)
+    GE              reduce using rule 55 (factor -> CNUM .)
+    LE              reduce using rule 55 (factor -> CNUM .)
+    PCOMA           reduce using rule 55 (factor -> CNUM .)
+    THEN            reduce using rule 55 (factor -> CNUM .)
+    COMA            reduce using rule 55 (factor -> CNUM .)
+    PARD            reduce using rule 55 (factor -> CNUM .)
+    DO              reduce using rule 55 (factor -> CNUM .)
 
 
 state 41
 
-    (48) signo -> MENOS .
+    (45) exprecion -> exprecion_simple .
+    (46) exprecion -> exprecion_simple . operador_relacional exprecion
+    (67) operador_relacional -> . EQ
+    (68) operador_relacional -> . LT
+    (69) operador_relacional -> . GT
+    (70) operador_relacional -> . GE
+    (71) operador_relacional -> . LE
 
-    CNUM            reduce using rule 48 (signo -> MENOS .)
-    STRING          reduce using rule 48 (signo -> MENOS .)
-    ID              reduce using rule 48 (signo -> MENOS .)
-    NUM             reduce using rule 48 (signo -> MENOS .)
-    PARI            reduce using rule 48 (signo -> MENOS .)
-    NOT             reduce using rule 48 (signo -> MENOS .)
+    DO              reduce using rule 45 (exprecion -> exprecion_simple .)
+    COMA            reduce using rule 45 (exprecion -> exprecion_simple .)
+    PARD            reduce using rule 45 (exprecion -> exprecion_simple .)
+    THEN            reduce using rule 45 (exprecion -> exprecion_simple .)
+    PCOMA           reduce using rule 45 (exprecion -> exprecion_simple .)
+    EQ              shift and go to state 69
+    LT              shift and go to state 67
+    GT              shift and go to state 64
+    GE              shift and go to state 65
+    LE              shift and go to state 68
 
+    operador_relacional            shift and go to state 66
 
 state 42
 
-    (44) exprecion_simple -> termino .
-    (46) exprecion_simple -> termino . adicion exprecion_simple
-    (57) adicion -> . MAS
-    (58) adicion -> . MENOS
-    (59) adicion -> . OR
+    (47) exprecion_simple -> signo . termino
+    (49) exprecion_simple -> signo . termino adicion exprecion_simple
+    (53) termino -> . factor
+    (54) termino -> . factor multipicacion termino
+    (55) factor -> . CNUM
+    (56) factor -> . STRING
+    (57) factor -> . ID
+    (58) factor -> . NUM
+    (59) factor -> . PARI exprecion PARD
+    (60) factor -> . NOT factor
 
-    EQ              reduce using rule 44 (exprecion_simple -> termino .)
-    LT              reduce using rule 44 (exprecion_simple -> termino .)
-    GT              reduce using rule 44 (exprecion_simple -> termino .)
-    GE              reduce using rule 44 (exprecion_simple -> termino .)
-    LE              reduce using rule 44 (exprecion_simple -> termino .)
-    DO              reduce using rule 44 (exprecion_simple -> termino .)
-    THEN            reduce using rule 44 (exprecion_simple -> termino .)
-    PARD            reduce using rule 44 (exprecion_simple -> termino .)
-    COMA            reduce using rule 44 (exprecion_simple -> termino .)
-    PCOMA           reduce using rule 44 (exprecion_simple -> termino .)
-    MAS             shift and go to state 67
-    MENOS           shift and go to state 69
-    OR              shift and go to state 70
+    CNUM            shift and go to state 40
+    STRING          shift and go to state 39
+    ID              shift and go to state 49
+    NUM             shift and go to state 47
+    PARI            shift and go to state 48
+    NOT             shift and go to state 46
 
-    adicion                        shift and go to state 68
+    termino                        shift and go to state 70
+    factor                         shift and go to state 45
 
 state 43
 
-    (49) termino -> factor .
-    (50) termino -> factor . multipicacion termino
-    (60) multipicacion -> . POR
-    (61) multipicacion -> . DIV
-    (62) multipicacion -> . AND
+    (34) declaracion_while -> WHILE exprecion . DO declaracion
+    (35) declaracion_while -> WHILE exprecion . DO declaracion BREAK
 
-    MAS             reduce using rule 49 (termino -> factor .)
-    MENOS           reduce using rule 49 (termino -> factor .)
-    OR              reduce using rule 49 (termino -> factor .)
-    EQ              reduce using rule 49 (termino -> factor .)
-    LT              reduce using rule 49 (termino -> factor .)
-    GT              reduce using rule 49 (termino -> factor .)
-    GE              reduce using rule 49 (termino -> factor .)
-    LE              reduce using rule 49 (termino -> factor .)
-    COMA            reduce using rule 49 (termino -> factor .)
-    PARD            reduce using rule 49 (termino -> factor .)
-    DO              reduce using rule 49 (termino -> factor .)
-    THEN            reduce using rule 49 (termino -> factor .)
-    PCOMA           reduce using rule 49 (termino -> factor .)
-    POR             shift and go to state 73
-    DIV             shift and go to state 74
-    AND             shift and go to state 71
+    DO              shift and go to state 71
 
-    multipicacion                  shift and go to state 72
 
 state 44
 
-    (56) factor -> NOT . factor
-    (51) factor -> . CNUM
-    (52) factor -> . STRING
-    (53) factor -> . ID
-    (54) factor -> . NUM
-    (55) factor -> . PARI exprecion PARD
-    (56) factor -> . NOT factor
+    (52) signo -> MENOS .
 
-    CNUM            shift and go to state 37
-    STRING          shift and go to state 36
-    ID              shift and go to state 47
-    NUM             shift and go to state 45
-    PARI            shift and go to state 46
-    NOT             shift and go to state 44
+    CNUM            reduce using rule 52 (signo -> MENOS .)
+    STRING          reduce using rule 52 (signo -> MENOS .)
+    ID              reduce using rule 52 (signo -> MENOS .)
+    NUM             reduce using rule 52 (signo -> MENOS .)
+    PARI            reduce using rule 52 (signo -> MENOS .)
+    NOT             reduce using rule 52 (signo -> MENOS .)
 
-    factor                         shift and go to state 75
 
 state 45
 
-    (54) factor -> NUM .
+    (53) termino -> factor .
+    (54) termino -> factor . multipicacion termino
+    (64) multipicacion -> . POR
+    (65) multipicacion -> . DIV
+    (66) multipicacion -> . AND
 
-    POR             reduce using rule 54 (factor -> NUM .)
-    DIV             reduce using rule 54 (factor -> NUM .)
-    AND             reduce using rule 54 (factor -> NUM .)
-    MAS             reduce using rule 54 (factor -> NUM .)
-    MENOS           reduce using rule 54 (factor -> NUM .)
-    OR              reduce using rule 54 (factor -> NUM .)
-    EQ              reduce using rule 54 (factor -> NUM .)
-    LT              reduce using rule 54 (factor -> NUM .)
-    GT              reduce using rule 54 (factor -> NUM .)
-    GE              reduce using rule 54 (factor -> NUM .)
-    LE              reduce using rule 54 (factor -> NUM .)
-    COMA            reduce using rule 54 (factor -> NUM .)
-    PARD            reduce using rule 54 (factor -> NUM .)
-    THEN            reduce using rule 54 (factor -> NUM .)
-    DO              reduce using rule 54 (factor -> NUM .)
-    PCOMA           reduce using rule 54 (factor -> NUM .)
+    MAS             reduce using rule 53 (termino -> factor .)
+    MENOS           reduce using rule 53 (termino -> factor .)
+    OR              reduce using rule 53 (termino -> factor .)
+    EQ              reduce using rule 53 (termino -> factor .)
+    LT              reduce using rule 53 (termino -> factor .)
+    GT              reduce using rule 53 (termino -> factor .)
+    GE              reduce using rule 53 (termino -> factor .)
+    LE              reduce using rule 53 (termino -> factor .)
+    DO              reduce using rule 53 (termino -> factor .)
+    THEN            reduce using rule 53 (termino -> factor .)
+    COMA            reduce using rule 53 (termino -> factor .)
+    PARD            reduce using rule 53 (termino -> factor .)
+    PCOMA           reduce using rule 53 (termino -> factor .)
+    POR             shift and go to state 74
+    DIV             shift and go to state 75
+    AND             shift and go to state 72
 
+    multipicacion                  shift and go to state 73
 
 state 46
 
-    (55) factor -> PARI . exprecion PARD
-    (41) exprecion -> . exprecion_simple
-    (42) exprecion -> . exprecion_simple operador_relacional exprecion
-    (43) exprecion_simple -> . signo termino
-    (44) exprecion_simple -> . termino
-    (45) exprecion_simple -> . signo termino adicion exprecion_simple
-    (46) exprecion_simple -> . termino adicion exprecion_simple
-    (47) signo -> . MAS
-    (48) signo -> . MENOS
-    (49) termino -> . factor
-    (50) termino -> . factor multipicacion termino
-    (51) factor -> . CNUM
-    (52) factor -> . STRING
-    (53) factor -> . ID
-    (54) factor -> . NUM
-    (55) factor -> . PARI exprecion PARD
-    (56) factor -> . NOT factor
+    (60) factor -> NOT . factor
+    (55) factor -> . CNUM
+    (56) factor -> . STRING
+    (57) factor -> . ID
+    (58) factor -> . NUM
+    (59) factor -> . PARI exprecion PARD
+    (60) factor -> . NOT factor
 
-    MAS             shift and go to state 35
-    MENOS           shift and go to state 41
-    CNUM            shift and go to state 37
-    STRING          shift and go to state 36
-    ID              shift and go to state 47
-    NUM             shift and go to state 45
-    PARI            shift and go to state 46
-    NOT             shift and go to state 44
+    CNUM            shift and go to state 40
+    STRING          shift and go to state 39
+    ID              shift and go to state 49
+    NUM             shift and go to state 47
+    PARI            shift and go to state 48
+    NOT             shift and go to state 46
 
-    exprecion_simple               shift and go to state 38
-    signo                          shift and go to state 39
-    exprecion                      shift and go to state 76
-    termino                        shift and go to state 42
-    factor                         shift and go to state 43
+    factor                         shift and go to state 76
 
 state 47
 
-    (53) factor -> ID .
+    (58) factor -> NUM .
 
-    POR             reduce using rule 53 (factor -> ID .)
-    DIV             reduce using rule 53 (factor -> ID .)
-    AND             reduce using rule 53 (factor -> ID .)
-    MAS             reduce using rule 53 (factor -> ID .)
-    MENOS           reduce using rule 53 (factor -> ID .)
-    OR              reduce using rule 53 (factor -> ID .)
-    EQ              reduce using rule 53 (factor -> ID .)
-    LT              reduce using rule 53 (factor -> ID .)
-    GT              reduce using rule 53 (factor -> ID .)
-    GE              reduce using rule 53 (factor -> ID .)
-    LE              reduce using rule 53 (factor -> ID .)
-    COMA            reduce using rule 53 (factor -> ID .)
-    PARD            reduce using rule 53 (factor -> ID .)
-    THEN            reduce using rule 53 (factor -> ID .)
-    DO              reduce using rule 53 (factor -> ID .)
-    PCOMA           reduce using rule 53 (factor -> ID .)
+    POR             reduce using rule 58 (factor -> NUM .)
+    DIV             reduce using rule 58 (factor -> NUM .)
+    AND             reduce using rule 58 (factor -> NUM .)
+    MAS             reduce using rule 58 (factor -> NUM .)
+    MENOS           reduce using rule 58 (factor -> NUM .)
+    OR              reduce using rule 58 (factor -> NUM .)
+    EQ              reduce using rule 58 (factor -> NUM .)
+    LT              reduce using rule 58 (factor -> NUM .)
+    GT              reduce using rule 58 (factor -> NUM .)
+    GE              reduce using rule 58 (factor -> NUM .)
+    LE              reduce using rule 58 (factor -> NUM .)
+    PCOMA           reduce using rule 58 (factor -> NUM .)
+    THEN            reduce using rule 58 (factor -> NUM .)
+    COMA            reduce using rule 58 (factor -> NUM .)
+    PARD            reduce using rule 58 (factor -> NUM .)
+    DO              reduce using rule 58 (factor -> NUM .)
 
 
 state 48
 
-    (37) escritura -> WRITE PARI . exp PARD PCOMA
-    (39) exp -> . exprecion
-    (40) exp -> . exprecion COMA exp
-    (41) exprecion -> . exprecion_simple
-    (42) exprecion -> . exprecion_simple operador_relacional exprecion
-    (43) exprecion_simple -> . signo termino
-    (44) exprecion_simple -> . termino
-    (45) exprecion_simple -> . signo termino adicion exprecion_simple
-    (46) exprecion_simple -> . termino adicion exprecion_simple
-    (47) signo -> . MAS
-    (48) signo -> . MENOS
-    (49) termino -> . factor
-    (50) termino -> . factor multipicacion termino
-    (51) factor -> . CNUM
-    (52) factor -> . STRING
-    (53) factor -> . ID
-    (54) factor -> . NUM
-    (55) factor -> . PARI exprecion PARD
-    (56) factor -> . NOT factor
+    (59) factor -> PARI . exprecion PARD
+    (45) exprecion -> . exprecion_simple
+    (46) exprecion -> . exprecion_simple operador_relacional exprecion
+    (47) exprecion_simple -> . signo termino
+    (48) exprecion_simple -> . termino
+    (49) exprecion_simple -> . signo termino adicion exprecion_simple
+    (50) exprecion_simple -> . termino adicion exprecion_simple
+    (51) signo -> . MAS
+    (52) signo -> . MENOS
+    (53) termino -> . factor
+    (54) termino -> . factor multipicacion termino
+    (55) factor -> . CNUM
+    (56) factor -> . STRING
+    (57) factor -> . ID
+    (58) factor -> . NUM
+    (59) factor -> . PARI exprecion PARD
+    (60) factor -> . NOT factor
 
-    MAS             shift and go to state 35
-    MENOS           shift and go to state 41
-    CNUM            shift and go to state 37
-    STRING          shift and go to state 36
-    ID              shift and go to state 47
-    NUM             shift and go to state 45
-    PARI            shift and go to state 46
-    NOT             shift and go to state 44
+    MAS             shift and go to state 38
+    MENOS           shift and go to state 44
+    CNUM            shift and go to state 40
+    STRING          shift and go to state 39
+    ID              shift and go to state 49
+    NUM             shift and go to state 47
+    PARI            shift and go to state 48
+    NOT             shift and go to state 46
 
-    exprecion_simple               shift and go to state 38
-    signo                          shift and go to state 39
+    exprecion_simple               shift and go to state 41
+    signo                          shift and go to state 42
     exprecion                      shift and go to state 77
-    termino                        shift and go to state 42
-    exp                            shift and go to state 78
-    factor                         shift and go to state 43
+    termino                        shift and go to state 50
+    factor                         shift and go to state 45
 
 state 49
 
-    (34) asignacion -> ID ASIG . exprecion PCOMA
-    (41) exprecion -> . exprecion_simple
-    (42) exprecion -> . exprecion_simple operador_relacional exprecion
-    (43) exprecion_simple -> . signo termino
-    (44) exprecion_simple -> . termino
-    (45) exprecion_simple -> . signo termino adicion exprecion_simple
-    (46) exprecion_simple -> . termino adicion exprecion_simple
-    (47) signo -> . MAS
-    (48) signo -> . MENOS
-    (49) termino -> . factor
-    (50) termino -> . factor multipicacion termino
-    (51) factor -> . CNUM
-    (52) factor -> . STRING
-    (53) factor -> . ID
-    (54) factor -> . NUM
-    (55) factor -> . PARI exprecion PARD
-    (56) factor -> . NOT factor
+    (57) factor -> ID .
 
-    MAS             shift and go to state 35
-    MENOS           shift and go to state 41
-    CNUM            shift and go to state 37
-    STRING          shift and go to state 36
-    ID              shift and go to state 47
-    NUM             shift and go to state 45
-    PARI            shift and go to state 46
-    NOT             shift and go to state 44
+    POR             reduce using rule 57 (factor -> ID .)
+    DIV             reduce using rule 57 (factor -> ID .)
+    AND             reduce using rule 57 (factor -> ID .)
+    MAS             reduce using rule 57 (factor -> ID .)
+    MENOS           reduce using rule 57 (factor -> ID .)
+    OR              reduce using rule 57 (factor -> ID .)
+    EQ              reduce using rule 57 (factor -> ID .)
+    LT              reduce using rule 57 (factor -> ID .)
+    GT              reduce using rule 57 (factor -> ID .)
+    GE              reduce using rule 57 (factor -> ID .)
+    LE              reduce using rule 57 (factor -> ID .)
+    PCOMA           reduce using rule 57 (factor -> ID .)
+    THEN            reduce using rule 57 (factor -> ID .)
+    COMA            reduce using rule 57 (factor -> ID .)
+    PARD            reduce using rule 57 (factor -> ID .)
+    DO              reduce using rule 57 (factor -> ID .)
 
-    exprecion_simple               shift and go to state 38
-    signo                          shift and go to state 39
-    exprecion                      shift and go to state 79
-    termino                        shift and go to state 42
-    factor                         shift and go to state 43
 
 state 50
 
-    (31) declaracion_if -> IF exprecion . THEN declaracion
-    (32) declaracion_if -> IF exprecion . THEN declaracion ELSE declaracion
+    (48) exprecion_simple -> termino .
+    (50) exprecion_simple -> termino . adicion exprecion_simple
+    (61) adicion -> . MAS
+    (62) adicion -> . MENOS
+    (63) adicion -> . OR
 
-    THEN            shift and go to state 80
+    EQ              reduce using rule 48 (exprecion_simple -> termino .)
+    LT              reduce using rule 48 (exprecion_simple -> termino .)
+    GT              reduce using rule 48 (exprecion_simple -> termino .)
+    GE              reduce using rule 48 (exprecion_simple -> termino .)
+    LE              reduce using rule 48 (exprecion_simple -> termino .)
+    PARD            reduce using rule 48 (exprecion_simple -> termino .)
+    DO              reduce using rule 48 (exprecion_simple -> termino .)
+    THEN            reduce using rule 48 (exprecion_simple -> termino .)
+    COMA            reduce using rule 48 (exprecion_simple -> termino .)
+    PCOMA           reduce using rule 48 (exprecion_simple -> termino .)
+    MAS             shift and go to state 78
+    MENOS           shift and go to state 80
+    OR              shift and go to state 81
 
+    adicion                        shift and go to state 79
 
 state 51
 
-    (38) escritura -> WRITELN PARI . exp PARD PCOMA
-    (39) exp -> . exprecion
-    (40) exp -> . exprecion COMA exp
-    (41) exprecion -> . exprecion_simple
-    (42) exprecion -> . exprecion_simple operador_relacional exprecion
-    (43) exprecion_simple -> . signo termino
-    (44) exprecion_simple -> . termino
-    (45) exprecion_simple -> . signo termino adicion exprecion_simple
-    (46) exprecion_simple -> . termino adicion exprecion_simple
-    (47) signo -> . MAS
-    (48) signo -> . MENOS
-    (49) termino -> . factor
-    (50) termino -> . factor multipicacion termino
-    (51) factor -> . CNUM
-    (52) factor -> . STRING
-    (53) factor -> . ID
-    (54) factor -> . NUM
-    (55) factor -> . PARI exprecion PARD
-    (56) factor -> . NOT factor
+    (36) declaracion_for -> FOR ID . ASIG CNUM TO DO declaracion PCOMA
+    (37) declaracion_for -> FOR ID . ASIG CNUM TO DO declaracion BREAK PCOMA
 
-    MAS             shift and go to state 35
-    MENOS           shift and go to state 41
-    CNUM            shift and go to state 37
-    STRING          shift and go to state 36
-    ID              shift and go to state 47
-    NUM             shift and go to state 45
-    PARI            shift and go to state 46
-    NOT             shift and go to state 44
+    ASIG            shift and go to state 82
 
-    exprecion_simple               shift and go to state 38
-    signo                          shift and go to state 39
-    exprecion                      shift and go to state 77
-    termino                        shift and go to state 42
-    exp                            shift and go to state 81
-    factor                         shift and go to state 43
 
 state 52
 
-    (20) declaraciones_compuesta -> BEGIN decla END .
+    (20) declaraciones_compuesta -> BEGIN cuerpo END .
 
-    END             reduce using rule 20 (declaraciones_compuesta -> BEGIN decla END .)
-    ID              reduce using rule 20 (declaraciones_compuesta -> BEGIN decla END .)
-    READ            reduce using rule 20 (declaraciones_compuesta -> BEGIN decla END .)
-    READLN          reduce using rule 20 (declaraciones_compuesta -> BEGIN decla END .)
-    WRITE           reduce using rule 20 (declaraciones_compuesta -> BEGIN decla END .)
-    WRITELN         reduce using rule 20 (declaraciones_compuesta -> BEGIN decla END .)
-    BEGIN           reduce using rule 20 (declaraciones_compuesta -> BEGIN decla END .)
-    IF              reduce using rule 20 (declaraciones_compuesta -> BEGIN decla END .)
-    WHILE           reduce using rule 20 (declaraciones_compuesta -> BEGIN decla END .)
-    ELSE            reduce using rule 20 (declaraciones_compuesta -> BEGIN decla END .)
-    $end            reduce using rule 20 (declaraciones_compuesta -> BEGIN decla END .)
+    BREAK           reduce using rule 20 (declaraciones_compuesta -> BEGIN cuerpo END .)
+    END             reduce using rule 20 (declaraciones_compuesta -> BEGIN cuerpo END .)
+    ID              reduce using rule 20 (declaraciones_compuesta -> BEGIN cuerpo END .)
+    READ            reduce using rule 20 (declaraciones_compuesta -> BEGIN cuerpo END .)
+    READLN          reduce using rule 20 (declaraciones_compuesta -> BEGIN cuerpo END .)
+    WRITE           reduce using rule 20 (declaraciones_compuesta -> BEGIN cuerpo END .)
+    WRITELN         reduce using rule 20 (declaraciones_compuesta -> BEGIN cuerpo END .)
+    BEGIN           reduce using rule 20 (declaraciones_compuesta -> BEGIN cuerpo END .)
+    IF              reduce using rule 20 (declaraciones_compuesta -> BEGIN cuerpo END .)
+    WHILE           reduce using rule 20 (declaraciones_compuesta -> BEGIN cuerpo END .)
+    FOR             reduce using rule 20 (declaraciones_compuesta -> BEGIN cuerpo END .)
+    ELSE            reduce using rule 20 (declaraciones_compuesta -> BEGIN cuerpo END .)
+    PCOMA           reduce using rule 20 (declaraciones_compuesta -> BEGIN cuerpo END .)
+    $end            reduce using rule 20 (declaraciones_compuesta -> BEGIN cuerpo END .)
 
 
 state 53
 
-    (22) decla -> decla declaracion .
+    (22) cuerpo -> cuerpo declaracion .
 
-    END             reduce using rule 22 (decla -> decla declaracion .)
-    ID              reduce using rule 22 (decla -> decla declaracion .)
-    READ            reduce using rule 22 (decla -> decla declaracion .)
-    READLN          reduce using rule 22 (decla -> decla declaracion .)
-    WRITE           reduce using rule 22 (decla -> decla declaracion .)
-    WRITELN         reduce using rule 22 (decla -> decla declaracion .)
-    BEGIN           reduce using rule 22 (decla -> decla declaracion .)
-    IF              reduce using rule 22 (decla -> decla declaracion .)
-    WHILE           reduce using rule 22 (decla -> decla declaracion .)
+    END             reduce using rule 22 (cuerpo -> cuerpo declaracion .)
+    ID              reduce using rule 22 (cuerpo -> cuerpo declaracion .)
+    READ            reduce using rule 22 (cuerpo -> cuerpo declaracion .)
+    READLN          reduce using rule 22 (cuerpo -> cuerpo declaracion .)
+    WRITE           reduce using rule 22 (cuerpo -> cuerpo declaracion .)
+    WRITELN         reduce using rule 22 (cuerpo -> cuerpo declaracion .)
+    BEGIN           reduce using rule 22 (cuerpo -> cuerpo declaracion .)
+    IF              reduce using rule 22 (cuerpo -> cuerpo declaracion .)
+    WHILE           reduce using rule 22 (cuerpo -> cuerpo declaracion .)
+    FOR             reduce using rule 22 (cuerpo -> cuerpo declaracion .)
 
 
 state 54
 
-    (36) lectura -> READLN PARI . ID PARD PCOMA
+    (38) asignacion -> ID ASIG . exprecion PCOMA
+    (45) exprecion -> . exprecion_simple
+    (46) exprecion -> . exprecion_simple operador_relacional exprecion
+    (47) exprecion_simple -> . signo termino
+    (48) exprecion_simple -> . termino
+    (49) exprecion_simple -> . signo termino adicion exprecion_simple
+    (50) exprecion_simple -> . termino adicion exprecion_simple
+    (51) signo -> . MAS
+    (52) signo -> . MENOS
+    (53) termino -> . factor
+    (54) termino -> . factor multipicacion termino
+    (55) factor -> . CNUM
+    (56) factor -> . STRING
+    (57) factor -> . ID
+    (58) factor -> . NUM
+    (59) factor -> . PARI exprecion PARD
+    (60) factor -> . NOT factor
 
-    ID              shift and go to state 82
+    MAS             shift and go to state 38
+    MENOS           shift and go to state 44
+    CNUM            shift and go to state 40
+    STRING          shift and go to state 39
+    ID              shift and go to state 49
+    NUM             shift and go to state 47
+    PARI            shift and go to state 48
+    NOT             shift and go to state 46
 
+    exprecion_simple               shift and go to state 41
+    signo                          shift and go to state 42
+    exprecion                      shift and go to state 83
+    termino                        shift and go to state 50
+    factor                         shift and go to state 45
 
 state 55
+
+    (32) declaracion_if -> IF exprecion . THEN declaracion
+    (33) declaracion_if -> IF exprecion . THEN declaracion ELSE declaracion
+
+    THEN            shift and go to state 84
+
+
+state 56
+
+    (41) escritura -> WRITE PARI . exp PARD PCOMA
+    (43) exp -> . exprecion
+    (44) exp -> . exprecion COMA exp
+    (45) exprecion -> . exprecion_simple
+    (46) exprecion -> . exprecion_simple operador_relacional exprecion
+    (47) exprecion_simple -> . signo termino
+    (48) exprecion_simple -> . termino
+    (49) exprecion_simple -> . signo termino adicion exprecion_simple
+    (50) exprecion_simple -> . termino adicion exprecion_simple
+    (51) signo -> . MAS
+    (52) signo -> . MENOS
+    (53) termino -> . factor
+    (54) termino -> . factor multipicacion termino
+    (55) factor -> . CNUM
+    (56) factor -> . STRING
+    (57) factor -> . ID
+    (58) factor -> . NUM
+    (59) factor -> . PARI exprecion PARD
+    (60) factor -> . NOT factor
+
+    MAS             shift and go to state 38
+    MENOS           shift and go to state 44
+    CNUM            shift and go to state 40
+    STRING          shift and go to state 39
+    ID              shift and go to state 49
+    NUM             shift and go to state 47
+    PARI            shift and go to state 48
+    NOT             shift and go to state 46
+
+    exprecion_simple               shift and go to state 41
+    signo                          shift and go to state 42
+    exprecion                      shift and go to state 61
+    termino                        shift and go to state 50
+    exp                            shift and go to state 85
+    factor                         shift and go to state 45
+
+state 57
+
+    (40) lectura -> READLN PARI . ID PARD PCOMA
+
+    ID              shift and go to state 86
+
+
+state 58
 
     (2) program -> PROGRAM ID PCOMA USES ID PCOMA . contenido
     (3) contenido -> . declaraciones
     (4) contenido -> . declaracion_variables declaraciones
     (19) declaraciones -> . declaraciones_compuesta
     (5) declaracion_variables -> . declaracion_variable
-    (20) declaraciones_compuesta -> . BEGIN decla END
-    (6) declaracion_variable -> . VAR dec DPUN type PCOMA
-    (7) declaracion_variable -> . VAR dec DPUN type PCOMA declaracion_variable
+    (20) declaraciones_compuesta -> . BEGIN cuerpo END
+    (6) declaracion_variable -> . VAR definicion DPUN type PCOMA
+    (7) declaracion_variable -> . VAR definicion DPUN type PCOMA declaracion_variable
 
     BEGIN           shift and go to state 6
     VAR             shift and go to state 12
 
     declaraciones_compuesta        shift and go to state 5
     declaracion_variable           shift and go to state 7
-    contenido                      shift and go to state 83
+    contenido                      shift and go to state 87
     declaraciones                  shift and go to state 9
     declaracion_variables          shift and go to state 11
 
-state 56
+state 59
 
-    (6) declaracion_variable -> VAR dec DPUN . type PCOMA
-    (7) declaracion_variable -> VAR dec DPUN . type PCOMA declaracion_variable
+    (6) declaracion_variable -> VAR definicion DPUN . type PCOMA
+    (7) declaracion_variable -> VAR definicion DPUN . type PCOMA declaracion_variable
     (10) type -> . type_simple
     (11) type -> . type_array
     (14) type_simple -> . INT
@@ -1128,391 +1208,183 @@ state 56
     (18) type_simple -> . CHAR
     (12) type_array -> . ARRAY CORI rango CORD OF type_simple
 
-    INT             shift and go to state 84
-    STR             shift and go to state 89
-    BOOL            shift and go to state 88
-    FLOAT           shift and go to state 85
-    CHAR            shift and go to state 86
-    ARRAY           shift and go to state 90
+    INT             shift and go to state 88
+    STR             shift and go to state 93
+    BOOL            shift and go to state 92
+    FLOAT           shift and go to state 89
+    CHAR            shift and go to state 90
+    ARRAY           shift and go to state 94
 
-    type_array                     shift and go to state 87
-    type                           shift and go to state 91
-    type_simple                    shift and go to state 92
-
-state 57
-
-    (9) dec -> ID COMA . dec
-    (8) dec -> . ID
-    (9) dec -> . ID COMA dec
-
-    ID              shift and go to state 33
-
-    dec                            shift and go to state 93
-
-state 58
-
-    (35) lectura -> READ PARI ID . PARD PCOMA
-
-    PARD            shift and go to state 94
-
-
-state 59
-
-    (65) operador_relacional -> GT .
-
-    MAS             reduce using rule 65 (operador_relacional -> GT .)
-    MENOS           reduce using rule 65 (operador_relacional -> GT .)
-    CNUM            reduce using rule 65 (operador_relacional -> GT .)
-    STRING          reduce using rule 65 (operador_relacional -> GT .)
-    ID              reduce using rule 65 (operador_relacional -> GT .)
-    NUM             reduce using rule 65 (operador_relacional -> GT .)
-    PARI            reduce using rule 65 (operador_relacional -> GT .)
-    NOT             reduce using rule 65 (operador_relacional -> GT .)
-
+    type_array                     shift and go to state 91
+    type                           shift and go to state 95
+    type_simple                    shift and go to state 96
 
 state 60
 
-    (66) operador_relacional -> GE .
+    (9) definicion -> ID COMA . definicion
+    (8) definicion -> . ID
+    (9) definicion -> . ID COMA definicion
 
-    MAS             reduce using rule 66 (operador_relacional -> GE .)
-    MENOS           reduce using rule 66 (operador_relacional -> GE .)
-    CNUM            reduce using rule 66 (operador_relacional -> GE .)
-    STRING          reduce using rule 66 (operador_relacional -> GE .)
-    ID              reduce using rule 66 (operador_relacional -> GE .)
-    NUM             reduce using rule 66 (operador_relacional -> GE .)
-    PARI            reduce using rule 66 (operador_relacional -> GE .)
-    NOT             reduce using rule 66 (operador_relacional -> GE .)
+    ID              shift and go to state 35
 
+    definicion                     shift and go to state 97
 
 state 61
 
-    (42) exprecion -> exprecion_simple operador_relacional . exprecion
-    (41) exprecion -> . exprecion_simple
-    (42) exprecion -> . exprecion_simple operador_relacional exprecion
-    (43) exprecion_simple -> . signo termino
-    (44) exprecion_simple -> . termino
-    (45) exprecion_simple -> . signo termino adicion exprecion_simple
-    (46) exprecion_simple -> . termino adicion exprecion_simple
-    (47) signo -> . MAS
-    (48) signo -> . MENOS
-    (49) termino -> . factor
-    (50) termino -> . factor multipicacion termino
-    (51) factor -> . CNUM
-    (52) factor -> . STRING
-    (53) factor -> . ID
-    (54) factor -> . NUM
-    (55) factor -> . PARI exprecion PARD
-    (56) factor -> . NOT factor
+    (43) exp -> exprecion .
+    (44) exp -> exprecion . COMA exp
 
-    MAS             shift and go to state 35
-    MENOS           shift and go to state 41
-    CNUM            shift and go to state 37
-    STRING          shift and go to state 36
-    ID              shift and go to state 47
-    NUM             shift and go to state 45
-    PARI            shift and go to state 46
-    NOT             shift and go to state 44
+    PARD            reduce using rule 43 (exp -> exprecion .)
+    COMA            shift and go to state 98
 
-    exprecion_simple               shift and go to state 38
-    signo                          shift and go to state 39
-    exprecion                      shift and go to state 95
-    termino                        shift and go to state 42
-    factor                         shift and go to state 43
 
 state 62
 
-    (64) operador_relacional -> LT .
+    (42) escritura -> WRITELN PARI exp . PARD PCOMA
 
-    MAS             reduce using rule 64 (operador_relacional -> LT .)
-    MENOS           reduce using rule 64 (operador_relacional -> LT .)
-    CNUM            reduce using rule 64 (operador_relacional -> LT .)
-    STRING          reduce using rule 64 (operador_relacional -> LT .)
-    ID              reduce using rule 64 (operador_relacional -> LT .)
-    NUM             reduce using rule 64 (operador_relacional -> LT .)
-    PARI            reduce using rule 64 (operador_relacional -> LT .)
-    NOT             reduce using rule 64 (operador_relacional -> LT .)
+    PARD            shift and go to state 99
 
 
 state 63
 
-    (67) operador_relacional -> LE .
-
-    MAS             reduce using rule 67 (operador_relacional -> LE .)
-    MENOS           reduce using rule 67 (operador_relacional -> LE .)
-    CNUM            reduce using rule 67 (operador_relacional -> LE .)
-    STRING          reduce using rule 67 (operador_relacional -> LE .)
-    ID              reduce using rule 67 (operador_relacional -> LE .)
-    NUM             reduce using rule 67 (operador_relacional -> LE .)
-    PARI            reduce using rule 67 (operador_relacional -> LE .)
-    NOT             reduce using rule 67 (operador_relacional -> LE .)
-
-
-state 64
-
-    (63) operador_relacional -> EQ .
-
-    MAS             reduce using rule 63 (operador_relacional -> EQ .)
-    MENOS           reduce using rule 63 (operador_relacional -> EQ .)
-    CNUM            reduce using rule 63 (operador_relacional -> EQ .)
-    STRING          reduce using rule 63 (operador_relacional -> EQ .)
-    ID              reduce using rule 63 (operador_relacional -> EQ .)
-    NUM             reduce using rule 63 (operador_relacional -> EQ .)
-    PARI            reduce using rule 63 (operador_relacional -> EQ .)
-    NOT             reduce using rule 63 (operador_relacional -> EQ .)
-
-
-state 65
-
-    (43) exprecion_simple -> signo termino .
-    (45) exprecion_simple -> signo termino . adicion exprecion_simple
-    (57) adicion -> . MAS
-    (58) adicion -> . MENOS
-    (59) adicion -> . OR
-
-    EQ              reduce using rule 43 (exprecion_simple -> signo termino .)
-    LT              reduce using rule 43 (exprecion_simple -> signo termino .)
-    GT              reduce using rule 43 (exprecion_simple -> signo termino .)
-    GE              reduce using rule 43 (exprecion_simple -> signo termino .)
-    LE              reduce using rule 43 (exprecion_simple -> signo termino .)
-    DO              reduce using rule 43 (exprecion_simple -> signo termino .)
-    THEN            reduce using rule 43 (exprecion_simple -> signo termino .)
-    PARD            reduce using rule 43 (exprecion_simple -> signo termino .)
-    COMA            reduce using rule 43 (exprecion_simple -> signo termino .)
-    PCOMA           reduce using rule 43 (exprecion_simple -> signo termino .)
-    MAS             shift and go to state 67
-    MENOS           shift and go to state 69
-    OR              shift and go to state 70
-
-    adicion                        shift and go to state 96
-
-state 66
-
-    (33) declaracion_while -> WHILE exprecion DO . declaracion
-    (23) declaracion -> . declaracion_simple
-    (24) declaracion -> . declaracion_estructurada
-    (25) declaracion_simple -> . asignacion
-    (26) declaracion_simple -> . lectura
-    (27) declaracion_simple -> . escritura
-    (28) declaracion_estructurada -> . declaraciones_compuesta
-    (29) declaracion_estructurada -> . declaracion_if
-    (30) declaracion_estructurada -> . declaracion_while
-    (34) asignacion -> . ID ASIG exprecion PCOMA
-    (35) lectura -> . READ PARI ID PARD PCOMA
-    (36) lectura -> . READLN PARI ID PARD PCOMA
-    (37) escritura -> . WRITE PARI exp PARD PCOMA
-    (38) escritura -> . WRITELN PARI exp PARD PCOMA
-    (20) declaraciones_compuesta -> . BEGIN decla END
-    (31) declaracion_if -> . IF exprecion THEN declaracion
-    (32) declaracion_if -> . IF exprecion THEN declaracion ELSE declaracion
-    (33) declaracion_while -> . WHILE exprecion DO declaracion
-
-    ID              shift and go to state 21
-    READ            shift and go to state 13
-    READLN          shift and go to state 27
-    WRITE           shift and go to state 18
-    WRITELN         shift and go to state 24
-    BEGIN           shift and go to state 6
-    IF              shift and go to state 22
-    WHILE           shift and go to state 14
-
-    declaraciones_compuesta        shift and go to state 23
-    declaracion_while              shift and go to state 15
-    asignacion                     shift and go to state 25
-    lectura                        shift and go to state 17
-    declaracion_if                 shift and go to state 19
-    declaracion_simple             shift and go to state 20
-    declaracion_estructurada       shift and go to state 16
-    declaracion                    shift and go to state 97
-    escritura                      shift and go to state 29
-
-state 67
-
-    (57) adicion -> MAS .
-
-    MAS             reduce using rule 57 (adicion -> MAS .)
-    MENOS           reduce using rule 57 (adicion -> MAS .)
-    CNUM            reduce using rule 57 (adicion -> MAS .)
-    STRING          reduce using rule 57 (adicion -> MAS .)
-    ID              reduce using rule 57 (adicion -> MAS .)
-    NUM             reduce using rule 57 (adicion -> MAS .)
-    PARI            reduce using rule 57 (adicion -> MAS .)
-    NOT             reduce using rule 57 (adicion -> MAS .)
-
-
-state 68
-
-    (46) exprecion_simple -> termino adicion . exprecion_simple
-    (43) exprecion_simple -> . signo termino
-    (44) exprecion_simple -> . termino
-    (45) exprecion_simple -> . signo termino adicion exprecion_simple
-    (46) exprecion_simple -> . termino adicion exprecion_simple
-    (47) signo -> . MAS
-    (48) signo -> . MENOS
-    (49) termino -> . factor
-    (50) termino -> . factor multipicacion termino
-    (51) factor -> . CNUM
-    (52) factor -> . STRING
-    (53) factor -> . ID
-    (54) factor -> . NUM
-    (55) factor -> . PARI exprecion PARD
-    (56) factor -> . NOT factor
-
-    MAS             shift and go to state 35
-    MENOS           shift and go to state 41
-    CNUM            shift and go to state 37
-    STRING          shift and go to state 36
-    ID              shift and go to state 47
-    NUM             shift and go to state 45
-    PARI            shift and go to state 46
-    NOT             shift and go to state 44
-
-    exprecion_simple               shift and go to state 98
-    signo                          shift and go to state 39
-    termino                        shift and go to state 42
-    factor                         shift and go to state 43
-
-state 69
-
-    (58) adicion -> MENOS .
-
-    MAS             reduce using rule 58 (adicion -> MENOS .)
-    MENOS           reduce using rule 58 (adicion -> MENOS .)
-    CNUM            reduce using rule 58 (adicion -> MENOS .)
-    STRING          reduce using rule 58 (adicion -> MENOS .)
-    ID              reduce using rule 58 (adicion -> MENOS .)
-    NUM             reduce using rule 58 (adicion -> MENOS .)
-    PARI            reduce using rule 58 (adicion -> MENOS .)
-    NOT             reduce using rule 58 (adicion -> MENOS .)
-
-
-state 70
-
-    (59) adicion -> OR .
-
-    MAS             reduce using rule 59 (adicion -> OR .)
-    MENOS           reduce using rule 59 (adicion -> OR .)
-    CNUM            reduce using rule 59 (adicion -> OR .)
-    STRING          reduce using rule 59 (adicion -> OR .)
-    ID              reduce using rule 59 (adicion -> OR .)
-    NUM             reduce using rule 59 (adicion -> OR .)
-    PARI            reduce using rule 59 (adicion -> OR .)
-    NOT             reduce using rule 59 (adicion -> OR .)
-
-
-state 71
-
-    (62) multipicacion -> AND .
-
-    CNUM            reduce using rule 62 (multipicacion -> AND .)
-    STRING          reduce using rule 62 (multipicacion -> AND .)
-    ID              reduce using rule 62 (multipicacion -> AND .)
-    NUM             reduce using rule 62 (multipicacion -> AND .)
-    PARI            reduce using rule 62 (multipicacion -> AND .)
-    NOT             reduce using rule 62 (multipicacion -> AND .)
-
-
-state 72
-
-    (50) termino -> factor multipicacion . termino
-    (49) termino -> . factor
-    (50) termino -> . factor multipicacion termino
-    (51) factor -> . CNUM
-    (52) factor -> . STRING
-    (53) factor -> . ID
-    (54) factor -> . NUM
-    (55) factor -> . PARI exprecion PARD
-    (56) factor -> . NOT factor
-
-    CNUM            shift and go to state 37
-    STRING          shift and go to state 36
-    ID              shift and go to state 47
-    NUM             shift and go to state 45
-    PARI            shift and go to state 46
-    NOT             shift and go to state 44
-
-    termino                        shift and go to state 99
-    factor                         shift and go to state 43
-
-state 73
-
-    (60) multipicacion -> POR .
-
-    CNUM            reduce using rule 60 (multipicacion -> POR .)
-    STRING          reduce using rule 60 (multipicacion -> POR .)
-    ID              reduce using rule 60 (multipicacion -> POR .)
-    NUM             reduce using rule 60 (multipicacion -> POR .)
-    PARI            reduce using rule 60 (multipicacion -> POR .)
-    NOT             reduce using rule 60 (multipicacion -> POR .)
-
-
-state 74
-
-    (61) multipicacion -> DIV .
-
-    CNUM            reduce using rule 61 (multipicacion -> DIV .)
-    STRING          reduce using rule 61 (multipicacion -> DIV .)
-    ID              reduce using rule 61 (multipicacion -> DIV .)
-    NUM             reduce using rule 61 (multipicacion -> DIV .)
-    PARI            reduce using rule 61 (multipicacion -> DIV .)
-    NOT             reduce using rule 61 (multipicacion -> DIV .)
-
-
-state 75
-
-    (56) factor -> NOT factor .
-
-    POR             reduce using rule 56 (factor -> NOT factor .)
-    DIV             reduce using rule 56 (factor -> NOT factor .)
-    AND             reduce using rule 56 (factor -> NOT factor .)
-    MAS             reduce using rule 56 (factor -> NOT factor .)
-    MENOS           reduce using rule 56 (factor -> NOT factor .)
-    OR              reduce using rule 56 (factor -> NOT factor .)
-    EQ              reduce using rule 56 (factor -> NOT factor .)
-    LT              reduce using rule 56 (factor -> NOT factor .)
-    GT              reduce using rule 56 (factor -> NOT factor .)
-    GE              reduce using rule 56 (factor -> NOT factor .)
-    LE              reduce using rule 56 (factor -> NOT factor .)
-    COMA            reduce using rule 56 (factor -> NOT factor .)
-    PARD            reduce using rule 56 (factor -> NOT factor .)
-    THEN            reduce using rule 56 (factor -> NOT factor .)
-    DO              reduce using rule 56 (factor -> NOT factor .)
-    PCOMA           reduce using rule 56 (factor -> NOT factor .)
-
-
-state 76
-
-    (55) factor -> PARI exprecion . PARD
+    (39) lectura -> READ PARI ID . PARD PCOMA
 
     PARD            shift and go to state 100
 
 
-state 77
+state 64
 
-    (39) exp -> exprecion .
-    (40) exp -> exprecion . COMA exp
+    (69) operador_relacional -> GT .
 
-    PARD            reduce using rule 39 (exp -> exprecion .)
-    COMA            shift and go to state 101
-
-
-state 78
-
-    (37) escritura -> WRITE PARI exp . PARD PCOMA
-
-    PARD            shift and go to state 102
+    MAS             reduce using rule 69 (operador_relacional -> GT .)
+    MENOS           reduce using rule 69 (operador_relacional -> GT .)
+    CNUM            reduce using rule 69 (operador_relacional -> GT .)
+    STRING          reduce using rule 69 (operador_relacional -> GT .)
+    ID              reduce using rule 69 (operador_relacional -> GT .)
+    NUM             reduce using rule 69 (operador_relacional -> GT .)
+    PARI            reduce using rule 69 (operador_relacional -> GT .)
+    NOT             reduce using rule 69 (operador_relacional -> GT .)
 
 
-state 79
+state 65
 
-    (34) asignacion -> ID ASIG exprecion . PCOMA
+    (70) operador_relacional -> GE .
 
-    PCOMA           shift and go to state 103
+    MAS             reduce using rule 70 (operador_relacional -> GE .)
+    MENOS           reduce using rule 70 (operador_relacional -> GE .)
+    CNUM            reduce using rule 70 (operador_relacional -> GE .)
+    STRING          reduce using rule 70 (operador_relacional -> GE .)
+    ID              reduce using rule 70 (operador_relacional -> GE .)
+    NUM             reduce using rule 70 (operador_relacional -> GE .)
+    PARI            reduce using rule 70 (operador_relacional -> GE .)
+    NOT             reduce using rule 70 (operador_relacional -> GE .)
 
 
-state 80
+state 66
 
-    (31) declaracion_if -> IF exprecion THEN . declaracion
-    (32) declaracion_if -> IF exprecion THEN . declaracion ELSE declaracion
+    (46) exprecion -> exprecion_simple operador_relacional . exprecion
+    (45) exprecion -> . exprecion_simple
+    (46) exprecion -> . exprecion_simple operador_relacional exprecion
+    (47) exprecion_simple -> . signo termino
+    (48) exprecion_simple -> . termino
+    (49) exprecion_simple -> . signo termino adicion exprecion_simple
+    (50) exprecion_simple -> . termino adicion exprecion_simple
+    (51) signo -> . MAS
+    (52) signo -> . MENOS
+    (53) termino -> . factor
+    (54) termino -> . factor multipicacion termino
+    (55) factor -> . CNUM
+    (56) factor -> . STRING
+    (57) factor -> . ID
+    (58) factor -> . NUM
+    (59) factor -> . PARI exprecion PARD
+    (60) factor -> . NOT factor
+
+    MAS             shift and go to state 38
+    MENOS           shift and go to state 44
+    CNUM            shift and go to state 40
+    STRING          shift and go to state 39
+    ID              shift and go to state 49
+    NUM             shift and go to state 47
+    PARI            shift and go to state 48
+    NOT             shift and go to state 46
+
+    exprecion_simple               shift and go to state 41
+    signo                          shift and go to state 42
+    exprecion                      shift and go to state 101
+    termino                        shift and go to state 50
+    factor                         shift and go to state 45
+
+state 67
+
+    (68) operador_relacional -> LT .
+
+    MAS             reduce using rule 68 (operador_relacional -> LT .)
+    MENOS           reduce using rule 68 (operador_relacional -> LT .)
+    CNUM            reduce using rule 68 (operador_relacional -> LT .)
+    STRING          reduce using rule 68 (operador_relacional -> LT .)
+    ID              reduce using rule 68 (operador_relacional -> LT .)
+    NUM             reduce using rule 68 (operador_relacional -> LT .)
+    PARI            reduce using rule 68 (operador_relacional -> LT .)
+    NOT             reduce using rule 68 (operador_relacional -> LT .)
+
+
+state 68
+
+    (71) operador_relacional -> LE .
+
+    MAS             reduce using rule 71 (operador_relacional -> LE .)
+    MENOS           reduce using rule 71 (operador_relacional -> LE .)
+    CNUM            reduce using rule 71 (operador_relacional -> LE .)
+    STRING          reduce using rule 71 (operador_relacional -> LE .)
+    ID              reduce using rule 71 (operador_relacional -> LE .)
+    NUM             reduce using rule 71 (operador_relacional -> LE .)
+    PARI            reduce using rule 71 (operador_relacional -> LE .)
+    NOT             reduce using rule 71 (operador_relacional -> LE .)
+
+
+state 69
+
+    (67) operador_relacional -> EQ .
+
+    MAS             reduce using rule 67 (operador_relacional -> EQ .)
+    MENOS           reduce using rule 67 (operador_relacional -> EQ .)
+    CNUM            reduce using rule 67 (operador_relacional -> EQ .)
+    STRING          reduce using rule 67 (operador_relacional -> EQ .)
+    ID              reduce using rule 67 (operador_relacional -> EQ .)
+    NUM             reduce using rule 67 (operador_relacional -> EQ .)
+    PARI            reduce using rule 67 (operador_relacional -> EQ .)
+    NOT             reduce using rule 67 (operador_relacional -> EQ .)
+
+
+state 70
+
+    (47) exprecion_simple -> signo termino .
+    (49) exprecion_simple -> signo termino . adicion exprecion_simple
+    (61) adicion -> . MAS
+    (62) adicion -> . MENOS
+    (63) adicion -> . OR
+
+    EQ              reduce using rule 47 (exprecion_simple -> signo termino .)
+    LT              reduce using rule 47 (exprecion_simple -> signo termino .)
+    GT              reduce using rule 47 (exprecion_simple -> signo termino .)
+    GE              reduce using rule 47 (exprecion_simple -> signo termino .)
+    LE              reduce using rule 47 (exprecion_simple -> signo termino .)
+    PARD            reduce using rule 47 (exprecion_simple -> signo termino .)
+    DO              reduce using rule 47 (exprecion_simple -> signo termino .)
+    THEN            reduce using rule 47 (exprecion_simple -> signo termino .)
+    COMA            reduce using rule 47 (exprecion_simple -> signo termino .)
+    PCOMA           reduce using rule 47 (exprecion_simple -> signo termino .)
+    MAS             shift and go to state 78
+    MENOS           shift and go to state 80
+    OR              shift and go to state 81
+
+    adicion                        shift and go to state 102
+
+state 71
+
+    (34) declaracion_while -> WHILE exprecion DO . declaracion
+    (35) declaracion_while -> WHILE exprecion DO . declaracion BREAK
     (23) declaracion -> . declaracion_simple
     (24) declaracion -> . declaracion_estructurada
     (25) declaracion_simple -> . asignacion
@@ -1521,424 +1393,707 @@ state 80
     (28) declaracion_estructurada -> . declaraciones_compuesta
     (29) declaracion_estructurada -> . declaracion_if
     (30) declaracion_estructurada -> . declaracion_while
-    (34) asignacion -> . ID ASIG exprecion PCOMA
-    (35) lectura -> . READ PARI ID PARD PCOMA
-    (36) lectura -> . READLN PARI ID PARD PCOMA
-    (37) escritura -> . WRITE PARI exp PARD PCOMA
-    (38) escritura -> . WRITELN PARI exp PARD PCOMA
-    (20) declaraciones_compuesta -> . BEGIN decla END
-    (31) declaracion_if -> . IF exprecion THEN declaracion
-    (32) declaracion_if -> . IF exprecion THEN declaracion ELSE declaracion
-    (33) declaracion_while -> . WHILE exprecion DO declaracion
+    (31) declaracion_estructurada -> . declaracion_for
+    (38) asignacion -> . ID ASIG exprecion PCOMA
+    (39) lectura -> . READ PARI ID PARD PCOMA
+    (40) lectura -> . READLN PARI ID PARD PCOMA
+    (41) escritura -> . WRITE PARI exp PARD PCOMA
+    (42) escritura -> . WRITELN PARI exp PARD PCOMA
+    (20) declaraciones_compuesta -> . BEGIN cuerpo END
+    (32) declaracion_if -> . IF exprecion THEN declaracion
+    (33) declaracion_if -> . IF exprecion THEN declaracion ELSE declaracion
+    (34) declaracion_while -> . WHILE exprecion DO declaracion
+    (35) declaracion_while -> . WHILE exprecion DO declaracion BREAK
+    (36) declaracion_for -> . FOR ID ASIG CNUM TO DO declaracion PCOMA
+    (37) declaracion_for -> . FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA
 
-    ID              shift and go to state 21
-    READ            shift and go to state 13
-    READLN          shift and go to state 27
-    WRITE           shift and go to state 18
-    WRITELN         shift and go to state 24
+    ID              shift and go to state 23
+    READ            shift and go to state 14
+    READLN          shift and go to state 29
+    WRITE           shift and go to state 26
+    WRITELN         shift and go to state 13
     BEGIN           shift and go to state 6
-    IF              shift and go to state 22
-    WHILE           shift and go to state 14
+    IF              shift and go to state 24
+    WHILE           shift and go to state 15
+    FOR             shift and go to state 19
 
-    declaraciones_compuesta        shift and go to state 23
-    declaracion_while              shift and go to state 15
-    asignacion                     shift and go to state 25
-    lectura                        shift and go to state 17
-    declaracion_if                 shift and go to state 19
-    declaracion_simple             shift and go to state 20
-    declaracion_estructurada       shift and go to state 16
-    declaracion                    shift and go to state 104
-    escritura                      shift and go to state 29
+    declaraciones_compuesta        shift and go to state 25
+    declaracion_while              shift and go to state 16
+    asignacion                     shift and go to state 27
+    declaracion_for                shift and go to state 28
+    lectura                        shift and go to state 18
+    declaracion_if                 shift and go to state 21
+    declaracion_simple             shift and go to state 22
+    declaracion_estructurada       shift and go to state 17
+    declaracion                    shift and go to state 103
+    escritura                      shift and go to state 31
 
-state 81
+state 72
 
-    (38) escritura -> WRITELN PARI exp . PARD PCOMA
+    (66) multipicacion -> AND .
+
+    CNUM            reduce using rule 66 (multipicacion -> AND .)
+    STRING          reduce using rule 66 (multipicacion -> AND .)
+    ID              reduce using rule 66 (multipicacion -> AND .)
+    NUM             reduce using rule 66 (multipicacion -> AND .)
+    PARI            reduce using rule 66 (multipicacion -> AND .)
+    NOT             reduce using rule 66 (multipicacion -> AND .)
+
+
+state 73
+
+    (54) termino -> factor multipicacion . termino
+    (53) termino -> . factor
+    (54) termino -> . factor multipicacion termino
+    (55) factor -> . CNUM
+    (56) factor -> . STRING
+    (57) factor -> . ID
+    (58) factor -> . NUM
+    (59) factor -> . PARI exprecion PARD
+    (60) factor -> . NOT factor
+
+    CNUM            shift and go to state 40
+    STRING          shift and go to state 39
+    ID              shift and go to state 49
+    NUM             shift and go to state 47
+    PARI            shift and go to state 48
+    NOT             shift and go to state 46
+
+    termino                        shift and go to state 104
+    factor                         shift and go to state 45
+
+state 74
+
+    (64) multipicacion -> POR .
+
+    CNUM            reduce using rule 64 (multipicacion -> POR .)
+    STRING          reduce using rule 64 (multipicacion -> POR .)
+    ID              reduce using rule 64 (multipicacion -> POR .)
+    NUM             reduce using rule 64 (multipicacion -> POR .)
+    PARI            reduce using rule 64 (multipicacion -> POR .)
+    NOT             reduce using rule 64 (multipicacion -> POR .)
+
+
+state 75
+
+    (65) multipicacion -> DIV .
+
+    CNUM            reduce using rule 65 (multipicacion -> DIV .)
+    STRING          reduce using rule 65 (multipicacion -> DIV .)
+    ID              reduce using rule 65 (multipicacion -> DIV .)
+    NUM             reduce using rule 65 (multipicacion -> DIV .)
+    PARI            reduce using rule 65 (multipicacion -> DIV .)
+    NOT             reduce using rule 65 (multipicacion -> DIV .)
+
+
+state 76
+
+    (60) factor -> NOT factor .
+
+    POR             reduce using rule 60 (factor -> NOT factor .)
+    DIV             reduce using rule 60 (factor -> NOT factor .)
+    AND             reduce using rule 60 (factor -> NOT factor .)
+    MAS             reduce using rule 60 (factor -> NOT factor .)
+    MENOS           reduce using rule 60 (factor -> NOT factor .)
+    OR              reduce using rule 60 (factor -> NOT factor .)
+    EQ              reduce using rule 60 (factor -> NOT factor .)
+    LT              reduce using rule 60 (factor -> NOT factor .)
+    GT              reduce using rule 60 (factor -> NOT factor .)
+    GE              reduce using rule 60 (factor -> NOT factor .)
+    LE              reduce using rule 60 (factor -> NOT factor .)
+    PCOMA           reduce using rule 60 (factor -> NOT factor .)
+    THEN            reduce using rule 60 (factor -> NOT factor .)
+    COMA            reduce using rule 60 (factor -> NOT factor .)
+    PARD            reduce using rule 60 (factor -> NOT factor .)
+    DO              reduce using rule 60 (factor -> NOT factor .)
+
+
+state 77
+
+    (59) factor -> PARI exprecion . PARD
 
     PARD            shift and go to state 105
 
 
+state 78
+
+    (61) adicion -> MAS .
+
+    MAS             reduce using rule 61 (adicion -> MAS .)
+    MENOS           reduce using rule 61 (adicion -> MAS .)
+    CNUM            reduce using rule 61 (adicion -> MAS .)
+    STRING          reduce using rule 61 (adicion -> MAS .)
+    ID              reduce using rule 61 (adicion -> MAS .)
+    NUM             reduce using rule 61 (adicion -> MAS .)
+    PARI            reduce using rule 61 (adicion -> MAS .)
+    NOT             reduce using rule 61 (adicion -> MAS .)
+
+
+state 79
+
+    (50) exprecion_simple -> termino adicion . exprecion_simple
+    (47) exprecion_simple -> . signo termino
+    (48) exprecion_simple -> . termino
+    (49) exprecion_simple -> . signo termino adicion exprecion_simple
+    (50) exprecion_simple -> . termino adicion exprecion_simple
+    (51) signo -> . MAS
+    (52) signo -> . MENOS
+    (53) termino -> . factor
+    (54) termino -> . factor multipicacion termino
+    (55) factor -> . CNUM
+    (56) factor -> . STRING
+    (57) factor -> . ID
+    (58) factor -> . NUM
+    (59) factor -> . PARI exprecion PARD
+    (60) factor -> . NOT factor
+
+    MAS             shift and go to state 38
+    MENOS           shift and go to state 44
+    CNUM            shift and go to state 40
+    STRING          shift and go to state 39
+    ID              shift and go to state 49
+    NUM             shift and go to state 47
+    PARI            shift and go to state 48
+    NOT             shift and go to state 46
+
+    exprecion_simple               shift and go to state 106
+    signo                          shift and go to state 42
+    termino                        shift and go to state 50
+    factor                         shift and go to state 45
+
+state 80
+
+    (62) adicion -> MENOS .
+
+    MAS             reduce using rule 62 (adicion -> MENOS .)
+    MENOS           reduce using rule 62 (adicion -> MENOS .)
+    CNUM            reduce using rule 62 (adicion -> MENOS .)
+    STRING          reduce using rule 62 (adicion -> MENOS .)
+    ID              reduce using rule 62 (adicion -> MENOS .)
+    NUM             reduce using rule 62 (adicion -> MENOS .)
+    PARI            reduce using rule 62 (adicion -> MENOS .)
+    NOT             reduce using rule 62 (adicion -> MENOS .)
+
+
+state 81
+
+    (63) adicion -> OR .
+
+    MAS             reduce using rule 63 (adicion -> OR .)
+    MENOS           reduce using rule 63 (adicion -> OR .)
+    CNUM            reduce using rule 63 (adicion -> OR .)
+    STRING          reduce using rule 63 (adicion -> OR .)
+    ID              reduce using rule 63 (adicion -> OR .)
+    NUM             reduce using rule 63 (adicion -> OR .)
+    PARI            reduce using rule 63 (adicion -> OR .)
+    NOT             reduce using rule 63 (adicion -> OR .)
+
+
 state 82
 
-    (36) lectura -> READLN PARI ID . PARD PCOMA
+    (36) declaracion_for -> FOR ID ASIG . CNUM TO DO declaracion PCOMA
+    (37) declaracion_for -> FOR ID ASIG . CNUM TO DO declaracion BREAK PCOMA
 
-    PARD            shift and go to state 106
+    CNUM            shift and go to state 107
 
 
 state 83
+
+    (38) asignacion -> ID ASIG exprecion . PCOMA
+
+    PCOMA           shift and go to state 108
+
+
+state 84
+
+    (32) declaracion_if -> IF exprecion THEN . declaracion
+    (33) declaracion_if -> IF exprecion THEN . declaracion ELSE declaracion
+    (23) declaracion -> . declaracion_simple
+    (24) declaracion -> . declaracion_estructurada
+    (25) declaracion_simple -> . asignacion
+    (26) declaracion_simple -> . lectura
+    (27) declaracion_simple -> . escritura
+    (28) declaracion_estructurada -> . declaraciones_compuesta
+    (29) declaracion_estructurada -> . declaracion_if
+    (30) declaracion_estructurada -> . declaracion_while
+    (31) declaracion_estructurada -> . declaracion_for
+    (38) asignacion -> . ID ASIG exprecion PCOMA
+    (39) lectura -> . READ PARI ID PARD PCOMA
+    (40) lectura -> . READLN PARI ID PARD PCOMA
+    (41) escritura -> . WRITE PARI exp PARD PCOMA
+    (42) escritura -> . WRITELN PARI exp PARD PCOMA
+    (20) declaraciones_compuesta -> . BEGIN cuerpo END
+    (32) declaracion_if -> . IF exprecion THEN declaracion
+    (33) declaracion_if -> . IF exprecion THEN declaracion ELSE declaracion
+    (34) declaracion_while -> . WHILE exprecion DO declaracion
+    (35) declaracion_while -> . WHILE exprecion DO declaracion BREAK
+    (36) declaracion_for -> . FOR ID ASIG CNUM TO DO declaracion PCOMA
+    (37) declaracion_for -> . FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA
+
+    ID              shift and go to state 23
+    READ            shift and go to state 14
+    READLN          shift and go to state 29
+    WRITE           shift and go to state 26
+    WRITELN         shift and go to state 13
+    BEGIN           shift and go to state 6
+    IF              shift and go to state 24
+    WHILE           shift and go to state 15
+    FOR             shift and go to state 19
+
+    declaraciones_compuesta        shift and go to state 25
+    declaracion_while              shift and go to state 16
+    asignacion                     shift and go to state 27
+    declaracion_for                shift and go to state 28
+    lectura                        shift and go to state 18
+    declaracion_if                 shift and go to state 21
+    declaracion_simple             shift and go to state 22
+    declaracion_estructurada       shift and go to state 17
+    declaracion                    shift and go to state 109
+    escritura                      shift and go to state 31
+
+state 85
+
+    (41) escritura -> WRITE PARI exp . PARD PCOMA
+
+    PARD            shift and go to state 110
+
+
+state 86
+
+    (40) lectura -> READLN PARI ID . PARD PCOMA
+
+    PARD            shift and go to state 111
+
+
+state 87
 
     (2) program -> PROGRAM ID PCOMA USES ID PCOMA contenido .
 
     $end            reduce using rule 2 (program -> PROGRAM ID PCOMA USES ID PCOMA contenido .)
 
 
-state 84
+state 88
 
     (14) type_simple -> INT .
 
     PCOMA           reduce using rule 14 (type_simple -> INT .)
 
 
-state 85
+state 89
 
     (17) type_simple -> FLOAT .
 
     PCOMA           reduce using rule 17 (type_simple -> FLOAT .)
 
 
-state 86
+state 90
 
     (18) type_simple -> CHAR .
 
     PCOMA           reduce using rule 18 (type_simple -> CHAR .)
 
 
-state 87
+state 91
 
     (11) type -> type_array .
 
     PCOMA           reduce using rule 11 (type -> type_array .)
 
 
-state 88
+state 92
 
     (16) type_simple -> BOOL .
 
     PCOMA           reduce using rule 16 (type_simple -> BOOL .)
 
 
-state 89
+state 93
 
     (15) type_simple -> STR .
 
     PCOMA           reduce using rule 15 (type_simple -> STR .)
 
 
-state 90
+state 94
 
     (12) type_array -> ARRAY . CORI rango CORD OF type_simple
 
-    CORI            shift and go to state 107
+    CORI            shift and go to state 112
 
 
-state 91
+state 95
 
-    (6) declaracion_variable -> VAR dec DPUN type . PCOMA
-    (7) declaracion_variable -> VAR dec DPUN type . PCOMA declaracion_variable
+    (6) declaracion_variable -> VAR definicion DPUN type . PCOMA
+    (7) declaracion_variable -> VAR definicion DPUN type . PCOMA declaracion_variable
 
-    PCOMA           shift and go to state 108
+    PCOMA           shift and go to state 113
 
 
-state 92
+state 96
 
     (10) type -> type_simple .
 
     PCOMA           reduce using rule 10 (type -> type_simple .)
 
 
-state 93
-
-    (9) dec -> ID COMA dec .
-
-    DPUN            reduce using rule 9 (dec -> ID COMA dec .)
-
-
-state 94
-
-    (35) lectura -> READ PARI ID PARD . PCOMA
-
-    PCOMA           shift and go to state 109
-
-
-state 95
-
-    (42) exprecion -> exprecion_simple operador_relacional exprecion .
-
-    DO              reduce using rule 42 (exprecion -> exprecion_simple operador_relacional exprecion .)
-    PARD            reduce using rule 42 (exprecion -> exprecion_simple operador_relacional exprecion .)
-    THEN            reduce using rule 42 (exprecion -> exprecion_simple operador_relacional exprecion .)
-    COMA            reduce using rule 42 (exprecion -> exprecion_simple operador_relacional exprecion .)
-    PCOMA           reduce using rule 42 (exprecion -> exprecion_simple operador_relacional exprecion .)
-
-
-state 96
-
-    (45) exprecion_simple -> signo termino adicion . exprecion_simple
-    (43) exprecion_simple -> . signo termino
-    (44) exprecion_simple -> . termino
-    (45) exprecion_simple -> . signo termino adicion exprecion_simple
-    (46) exprecion_simple -> . termino adicion exprecion_simple
-    (47) signo -> . MAS
-    (48) signo -> . MENOS
-    (49) termino -> . factor
-    (50) termino -> . factor multipicacion termino
-    (51) factor -> . CNUM
-    (52) factor -> . STRING
-    (53) factor -> . ID
-    (54) factor -> . NUM
-    (55) factor -> . PARI exprecion PARD
-    (56) factor -> . NOT factor
-
-    MAS             shift and go to state 35
-    MENOS           shift and go to state 41
-    CNUM            shift and go to state 37
-    STRING          shift and go to state 36
-    ID              shift and go to state 47
-    NUM             shift and go to state 45
-    PARI            shift and go to state 46
-    NOT             shift and go to state 44
-
-    exprecion_simple               shift and go to state 110
-    signo                          shift and go to state 39
-    termino                        shift and go to state 42
-    factor                         shift and go to state 43
-
 state 97
 
-    (33) declaracion_while -> WHILE exprecion DO declaracion .
+    (9) definicion -> ID COMA definicion .
 
-    END             reduce using rule 33 (declaracion_while -> WHILE exprecion DO declaracion .)
-    ID              reduce using rule 33 (declaracion_while -> WHILE exprecion DO declaracion .)
-    READ            reduce using rule 33 (declaracion_while -> WHILE exprecion DO declaracion .)
-    READLN          reduce using rule 33 (declaracion_while -> WHILE exprecion DO declaracion .)
-    WRITE           reduce using rule 33 (declaracion_while -> WHILE exprecion DO declaracion .)
-    WRITELN         reduce using rule 33 (declaracion_while -> WHILE exprecion DO declaracion .)
-    BEGIN           reduce using rule 33 (declaracion_while -> WHILE exprecion DO declaracion .)
-    IF              reduce using rule 33 (declaracion_while -> WHILE exprecion DO declaracion .)
-    WHILE           reduce using rule 33 (declaracion_while -> WHILE exprecion DO declaracion .)
-    ELSE            reduce using rule 33 (declaracion_while -> WHILE exprecion DO declaracion .)
+    DPUN            reduce using rule 9 (definicion -> ID COMA definicion .)
 
 
 state 98
 
-    (46) exprecion_simple -> termino adicion exprecion_simple .
+    (44) exp -> exprecion COMA . exp
+    (43) exp -> . exprecion
+    (44) exp -> . exprecion COMA exp
+    (45) exprecion -> . exprecion_simple
+    (46) exprecion -> . exprecion_simple operador_relacional exprecion
+    (47) exprecion_simple -> . signo termino
+    (48) exprecion_simple -> . termino
+    (49) exprecion_simple -> . signo termino adicion exprecion_simple
+    (50) exprecion_simple -> . termino adicion exprecion_simple
+    (51) signo -> . MAS
+    (52) signo -> . MENOS
+    (53) termino -> . factor
+    (54) termino -> . factor multipicacion termino
+    (55) factor -> . CNUM
+    (56) factor -> . STRING
+    (57) factor -> . ID
+    (58) factor -> . NUM
+    (59) factor -> . PARI exprecion PARD
+    (60) factor -> . NOT factor
 
-    EQ              reduce using rule 46 (exprecion_simple -> termino adicion exprecion_simple .)
-    LT              reduce using rule 46 (exprecion_simple -> termino adicion exprecion_simple .)
-    GT              reduce using rule 46 (exprecion_simple -> termino adicion exprecion_simple .)
-    GE              reduce using rule 46 (exprecion_simple -> termino adicion exprecion_simple .)
-    LE              reduce using rule 46 (exprecion_simple -> termino adicion exprecion_simple .)
-    DO              reduce using rule 46 (exprecion_simple -> termino adicion exprecion_simple .)
-    THEN            reduce using rule 46 (exprecion_simple -> termino adicion exprecion_simple .)
-    PARD            reduce using rule 46 (exprecion_simple -> termino adicion exprecion_simple .)
-    COMA            reduce using rule 46 (exprecion_simple -> termino adicion exprecion_simple .)
-    PCOMA           reduce using rule 46 (exprecion_simple -> termino adicion exprecion_simple .)
+    MAS             shift and go to state 38
+    MENOS           shift and go to state 44
+    CNUM            shift and go to state 40
+    STRING          shift and go to state 39
+    ID              shift and go to state 49
+    NUM             shift and go to state 47
+    PARI            shift and go to state 48
+    NOT             shift and go to state 46
 
+    exprecion_simple               shift and go to state 41
+    signo                          shift and go to state 42
+    exprecion                      shift and go to state 61
+    termino                        shift and go to state 50
+    exp                            shift and go to state 114
+    factor                         shift and go to state 45
 
 state 99
 
-    (50) termino -> factor multipicacion termino .
-
-    MAS             reduce using rule 50 (termino -> factor multipicacion termino .)
-    MENOS           reduce using rule 50 (termino -> factor multipicacion termino .)
-    OR              reduce using rule 50 (termino -> factor multipicacion termino .)
-    EQ              reduce using rule 50 (termino -> factor multipicacion termino .)
-    LT              reduce using rule 50 (termino -> factor multipicacion termino .)
-    GT              reduce using rule 50 (termino -> factor multipicacion termino .)
-    GE              reduce using rule 50 (termino -> factor multipicacion termino .)
-    LE              reduce using rule 50 (termino -> factor multipicacion termino .)
-    COMA            reduce using rule 50 (termino -> factor multipicacion termino .)
-    PARD            reduce using rule 50 (termino -> factor multipicacion termino .)
-    DO              reduce using rule 50 (termino -> factor multipicacion termino .)
-    THEN            reduce using rule 50 (termino -> factor multipicacion termino .)
-    PCOMA           reduce using rule 50 (termino -> factor multipicacion termino .)
-
-
-state 100
-
-    (55) factor -> PARI exprecion PARD .
-
-    POR             reduce using rule 55 (factor -> PARI exprecion PARD .)
-    DIV             reduce using rule 55 (factor -> PARI exprecion PARD .)
-    AND             reduce using rule 55 (factor -> PARI exprecion PARD .)
-    MAS             reduce using rule 55 (factor -> PARI exprecion PARD .)
-    MENOS           reduce using rule 55 (factor -> PARI exprecion PARD .)
-    OR              reduce using rule 55 (factor -> PARI exprecion PARD .)
-    EQ              reduce using rule 55 (factor -> PARI exprecion PARD .)
-    LT              reduce using rule 55 (factor -> PARI exprecion PARD .)
-    GT              reduce using rule 55 (factor -> PARI exprecion PARD .)
-    GE              reduce using rule 55 (factor -> PARI exprecion PARD .)
-    LE              reduce using rule 55 (factor -> PARI exprecion PARD .)
-    COMA            reduce using rule 55 (factor -> PARI exprecion PARD .)
-    PARD            reduce using rule 55 (factor -> PARI exprecion PARD .)
-    THEN            reduce using rule 55 (factor -> PARI exprecion PARD .)
-    DO              reduce using rule 55 (factor -> PARI exprecion PARD .)
-    PCOMA           reduce using rule 55 (factor -> PARI exprecion PARD .)
-
-
-state 101
-
-    (40) exp -> exprecion COMA . exp
-    (39) exp -> . exprecion
-    (40) exp -> . exprecion COMA exp
-    (41) exprecion -> . exprecion_simple
-    (42) exprecion -> . exprecion_simple operador_relacional exprecion
-    (43) exprecion_simple -> . signo termino
-    (44) exprecion_simple -> . termino
-    (45) exprecion_simple -> . signo termino adicion exprecion_simple
-    (46) exprecion_simple -> . termino adicion exprecion_simple
-    (47) signo -> . MAS
-    (48) signo -> . MENOS
-    (49) termino -> . factor
-    (50) termino -> . factor multipicacion termino
-    (51) factor -> . CNUM
-    (52) factor -> . STRING
-    (53) factor -> . ID
-    (54) factor -> . NUM
-    (55) factor -> . PARI exprecion PARD
-    (56) factor -> . NOT factor
-
-    MAS             shift and go to state 35
-    MENOS           shift and go to state 41
-    CNUM            shift and go to state 37
-    STRING          shift and go to state 36
-    ID              shift and go to state 47
-    NUM             shift and go to state 45
-    PARI            shift and go to state 46
-    NOT             shift and go to state 44
-
-    exprecion_simple               shift and go to state 38
-    signo                          shift and go to state 39
-    exprecion                      shift and go to state 77
-    termino                        shift and go to state 42
-    exp                            shift and go to state 111
-    factor                         shift and go to state 43
-
-state 102
-
-    (37) escritura -> WRITE PARI exp PARD . PCOMA
-
-    PCOMA           shift and go to state 112
-
-
-state 103
-
-    (34) asignacion -> ID ASIG exprecion PCOMA .
-
-    END             reduce using rule 34 (asignacion -> ID ASIG exprecion PCOMA .)
-    ID              reduce using rule 34 (asignacion -> ID ASIG exprecion PCOMA .)
-    READ            reduce using rule 34 (asignacion -> ID ASIG exprecion PCOMA .)
-    READLN          reduce using rule 34 (asignacion -> ID ASIG exprecion PCOMA .)
-    WRITE           reduce using rule 34 (asignacion -> ID ASIG exprecion PCOMA .)
-    WRITELN         reduce using rule 34 (asignacion -> ID ASIG exprecion PCOMA .)
-    BEGIN           reduce using rule 34 (asignacion -> ID ASIG exprecion PCOMA .)
-    IF              reduce using rule 34 (asignacion -> ID ASIG exprecion PCOMA .)
-    WHILE           reduce using rule 34 (asignacion -> ID ASIG exprecion PCOMA .)
-    ELSE            reduce using rule 34 (asignacion -> ID ASIG exprecion PCOMA .)
-
-
-state 104
-
-    (31) declaracion_if -> IF exprecion THEN declaracion .
-    (32) declaracion_if -> IF exprecion THEN declaracion . ELSE declaracion
-
-  ! shift/reduce conflict for ELSE resolved as shift
-    END             reduce using rule 31 (declaracion_if -> IF exprecion THEN declaracion .)
-    ID              reduce using rule 31 (declaracion_if -> IF exprecion THEN declaracion .)
-    READ            reduce using rule 31 (declaracion_if -> IF exprecion THEN declaracion .)
-    READLN          reduce using rule 31 (declaracion_if -> IF exprecion THEN declaracion .)
-    WRITE           reduce using rule 31 (declaracion_if -> IF exprecion THEN declaracion .)
-    WRITELN         reduce using rule 31 (declaracion_if -> IF exprecion THEN declaracion .)
-    BEGIN           reduce using rule 31 (declaracion_if -> IF exprecion THEN declaracion .)
-    IF              reduce using rule 31 (declaracion_if -> IF exprecion THEN declaracion .)
-    WHILE           reduce using rule 31 (declaracion_if -> IF exprecion THEN declaracion .)
-    ELSE            shift and go to state 113
-
-  ! ELSE            [ reduce using rule 31 (declaracion_if -> IF exprecion THEN declaracion .) ]
-
-
-state 105
-
-    (38) escritura -> WRITELN PARI exp PARD . PCOMA
-
-    PCOMA           shift and go to state 114
-
-
-state 106
-
-    (36) lectura -> READLN PARI ID PARD . PCOMA
+    (42) escritura -> WRITELN PARI exp PARD . PCOMA
 
     PCOMA           shift and go to state 115
 
 
+state 100
+
+    (39) lectura -> READ PARI ID PARD . PCOMA
+
+    PCOMA           shift and go to state 116
+
+
+state 101
+
+    (46) exprecion -> exprecion_simple operador_relacional exprecion .
+
+    DO              reduce using rule 46 (exprecion -> exprecion_simple operador_relacional exprecion .)
+    COMA            reduce using rule 46 (exprecion -> exprecion_simple operador_relacional exprecion .)
+    PARD            reduce using rule 46 (exprecion -> exprecion_simple operador_relacional exprecion .)
+    THEN            reduce using rule 46 (exprecion -> exprecion_simple operador_relacional exprecion .)
+    PCOMA           reduce using rule 46 (exprecion -> exprecion_simple operador_relacional exprecion .)
+
+
+state 102
+
+    (49) exprecion_simple -> signo termino adicion . exprecion_simple
+    (47) exprecion_simple -> . signo termino
+    (48) exprecion_simple -> . termino
+    (49) exprecion_simple -> . signo termino adicion exprecion_simple
+    (50) exprecion_simple -> . termino adicion exprecion_simple
+    (51) signo -> . MAS
+    (52) signo -> . MENOS
+    (53) termino -> . factor
+    (54) termino -> . factor multipicacion termino
+    (55) factor -> . CNUM
+    (56) factor -> . STRING
+    (57) factor -> . ID
+    (58) factor -> . NUM
+    (59) factor -> . PARI exprecion PARD
+    (60) factor -> . NOT factor
+
+    MAS             shift and go to state 38
+    MENOS           shift and go to state 44
+    CNUM            shift and go to state 40
+    STRING          shift and go to state 39
+    ID              shift and go to state 49
+    NUM             shift and go to state 47
+    PARI            shift and go to state 48
+    NOT             shift and go to state 46
+
+    exprecion_simple               shift and go to state 117
+    signo                          shift and go to state 42
+    termino                        shift and go to state 50
+    factor                         shift and go to state 45
+
+state 103
+
+    (34) declaracion_while -> WHILE exprecion DO declaracion .
+    (35) declaracion_while -> WHILE exprecion DO declaracion . BREAK
+
+  ! shift/reduce conflict for BREAK resolved as shift
+    END             reduce using rule 34 (declaracion_while -> WHILE exprecion DO declaracion .)
+    ID              reduce using rule 34 (declaracion_while -> WHILE exprecion DO declaracion .)
+    READ            reduce using rule 34 (declaracion_while -> WHILE exprecion DO declaracion .)
+    READLN          reduce using rule 34 (declaracion_while -> WHILE exprecion DO declaracion .)
+    WRITE           reduce using rule 34 (declaracion_while -> WHILE exprecion DO declaracion .)
+    WRITELN         reduce using rule 34 (declaracion_while -> WHILE exprecion DO declaracion .)
+    BEGIN           reduce using rule 34 (declaracion_while -> WHILE exprecion DO declaracion .)
+    IF              reduce using rule 34 (declaracion_while -> WHILE exprecion DO declaracion .)
+    WHILE           reduce using rule 34 (declaracion_while -> WHILE exprecion DO declaracion .)
+    FOR             reduce using rule 34 (declaracion_while -> WHILE exprecion DO declaracion .)
+    ELSE            reduce using rule 34 (declaracion_while -> WHILE exprecion DO declaracion .)
+    PCOMA           reduce using rule 34 (declaracion_while -> WHILE exprecion DO declaracion .)
+    BREAK           shift and go to state 118
+
+  ! BREAK           [ reduce using rule 34 (declaracion_while -> WHILE exprecion DO declaracion .) ]
+
+
+state 104
+
+    (54) termino -> factor multipicacion termino .
+
+    MAS             reduce using rule 54 (termino -> factor multipicacion termino .)
+    MENOS           reduce using rule 54 (termino -> factor multipicacion termino .)
+    OR              reduce using rule 54 (termino -> factor multipicacion termino .)
+    EQ              reduce using rule 54 (termino -> factor multipicacion termino .)
+    LT              reduce using rule 54 (termino -> factor multipicacion termino .)
+    GT              reduce using rule 54 (termino -> factor multipicacion termino .)
+    GE              reduce using rule 54 (termino -> factor multipicacion termino .)
+    LE              reduce using rule 54 (termino -> factor multipicacion termino .)
+    DO              reduce using rule 54 (termino -> factor multipicacion termino .)
+    THEN            reduce using rule 54 (termino -> factor multipicacion termino .)
+    COMA            reduce using rule 54 (termino -> factor multipicacion termino .)
+    PARD            reduce using rule 54 (termino -> factor multipicacion termino .)
+    PCOMA           reduce using rule 54 (termino -> factor multipicacion termino .)
+
+
+state 105
+
+    (59) factor -> PARI exprecion PARD .
+
+    POR             reduce using rule 59 (factor -> PARI exprecion PARD .)
+    DIV             reduce using rule 59 (factor -> PARI exprecion PARD .)
+    AND             reduce using rule 59 (factor -> PARI exprecion PARD .)
+    MAS             reduce using rule 59 (factor -> PARI exprecion PARD .)
+    MENOS           reduce using rule 59 (factor -> PARI exprecion PARD .)
+    OR              reduce using rule 59 (factor -> PARI exprecion PARD .)
+    EQ              reduce using rule 59 (factor -> PARI exprecion PARD .)
+    LT              reduce using rule 59 (factor -> PARI exprecion PARD .)
+    GT              reduce using rule 59 (factor -> PARI exprecion PARD .)
+    GE              reduce using rule 59 (factor -> PARI exprecion PARD .)
+    LE              reduce using rule 59 (factor -> PARI exprecion PARD .)
+    PCOMA           reduce using rule 59 (factor -> PARI exprecion PARD .)
+    THEN            reduce using rule 59 (factor -> PARI exprecion PARD .)
+    COMA            reduce using rule 59 (factor -> PARI exprecion PARD .)
+    PARD            reduce using rule 59 (factor -> PARI exprecion PARD .)
+    DO              reduce using rule 59 (factor -> PARI exprecion PARD .)
+
+
+state 106
+
+    (50) exprecion_simple -> termino adicion exprecion_simple .
+
+    EQ              reduce using rule 50 (exprecion_simple -> termino adicion exprecion_simple .)
+    LT              reduce using rule 50 (exprecion_simple -> termino adicion exprecion_simple .)
+    GT              reduce using rule 50 (exprecion_simple -> termino adicion exprecion_simple .)
+    GE              reduce using rule 50 (exprecion_simple -> termino adicion exprecion_simple .)
+    LE              reduce using rule 50 (exprecion_simple -> termino adicion exprecion_simple .)
+    PARD            reduce using rule 50 (exprecion_simple -> termino adicion exprecion_simple .)
+    DO              reduce using rule 50 (exprecion_simple -> termino adicion exprecion_simple .)
+    THEN            reduce using rule 50 (exprecion_simple -> termino adicion exprecion_simple .)
+    COMA            reduce using rule 50 (exprecion_simple -> termino adicion exprecion_simple .)
+    PCOMA           reduce using rule 50 (exprecion_simple -> termino adicion exprecion_simple .)
+
+
 state 107
 
-    (12) type_array -> ARRAY CORI . rango CORD OF type_simple
-    (13) rango -> . CNUM PUNTO PUNTO CNUM
+    (36) declaracion_for -> FOR ID ASIG CNUM . TO DO declaracion PCOMA
+    (37) declaracion_for -> FOR ID ASIG CNUM . TO DO declaracion BREAK PCOMA
 
-    CNUM            shift and go to state 116
+    TO              shift and go to state 119
 
-    rango                          shift and go to state 117
 
 state 108
 
-    (6) declaracion_variable -> VAR dec DPUN type PCOMA .
-    (7) declaracion_variable -> VAR dec DPUN type PCOMA . declaracion_variable
-    (6) declaracion_variable -> . VAR dec DPUN type PCOMA
-    (7) declaracion_variable -> . VAR dec DPUN type PCOMA declaracion_variable
+    (38) asignacion -> ID ASIG exprecion PCOMA .
 
-    BEGIN           reduce using rule 6 (declaracion_variable -> VAR dec DPUN type PCOMA .)
-    VAR             shift and go to state 12
+    BREAK           reduce using rule 38 (asignacion -> ID ASIG exprecion PCOMA .)
+    END             reduce using rule 38 (asignacion -> ID ASIG exprecion PCOMA .)
+    ID              reduce using rule 38 (asignacion -> ID ASIG exprecion PCOMA .)
+    READ            reduce using rule 38 (asignacion -> ID ASIG exprecion PCOMA .)
+    READLN          reduce using rule 38 (asignacion -> ID ASIG exprecion PCOMA .)
+    WRITE           reduce using rule 38 (asignacion -> ID ASIG exprecion PCOMA .)
+    WRITELN         reduce using rule 38 (asignacion -> ID ASIG exprecion PCOMA .)
+    BEGIN           reduce using rule 38 (asignacion -> ID ASIG exprecion PCOMA .)
+    IF              reduce using rule 38 (asignacion -> ID ASIG exprecion PCOMA .)
+    WHILE           reduce using rule 38 (asignacion -> ID ASIG exprecion PCOMA .)
+    FOR             reduce using rule 38 (asignacion -> ID ASIG exprecion PCOMA .)
+    ELSE            reduce using rule 38 (asignacion -> ID ASIG exprecion PCOMA .)
+    PCOMA           reduce using rule 38 (asignacion -> ID ASIG exprecion PCOMA .)
 
-    declaracion_variable           shift and go to state 118
 
 state 109
 
-    (35) lectura -> READ PARI ID PARD PCOMA .
+    (32) declaracion_if -> IF exprecion THEN declaracion .
+    (33) declaracion_if -> IF exprecion THEN declaracion . ELSE declaracion
 
-    END             reduce using rule 35 (lectura -> READ PARI ID PARD PCOMA .)
-    ID              reduce using rule 35 (lectura -> READ PARI ID PARD PCOMA .)
-    READ            reduce using rule 35 (lectura -> READ PARI ID PARD PCOMA .)
-    READLN          reduce using rule 35 (lectura -> READ PARI ID PARD PCOMA .)
-    WRITE           reduce using rule 35 (lectura -> READ PARI ID PARD PCOMA .)
-    WRITELN         reduce using rule 35 (lectura -> READ PARI ID PARD PCOMA .)
-    BEGIN           reduce using rule 35 (lectura -> READ PARI ID PARD PCOMA .)
-    IF              reduce using rule 35 (lectura -> READ PARI ID PARD PCOMA .)
-    WHILE           reduce using rule 35 (lectura -> READ PARI ID PARD PCOMA .)
-    ELSE            reduce using rule 35 (lectura -> READ PARI ID PARD PCOMA .)
+  ! shift/reduce conflict for ELSE resolved as shift
+    PCOMA           reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion .)
+    BREAK           reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion .)
+    END             reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion .)
+    ID              reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion .)
+    READ            reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion .)
+    READLN          reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion .)
+    WRITE           reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion .)
+    WRITELN         reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion .)
+    BEGIN           reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion .)
+    IF              reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion .)
+    WHILE           reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion .)
+    FOR             reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion .)
+    ELSE            shift and go to state 120
+
+  ! ELSE            [ reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion .) ]
 
 
 state 110
 
-    (45) exprecion_simple -> signo termino adicion exprecion_simple .
+    (41) escritura -> WRITE PARI exp PARD . PCOMA
 
-    EQ              reduce using rule 45 (exprecion_simple -> signo termino adicion exprecion_simple .)
-    LT              reduce using rule 45 (exprecion_simple -> signo termino adicion exprecion_simple .)
-    GT              reduce using rule 45 (exprecion_simple -> signo termino adicion exprecion_simple .)
-    GE              reduce using rule 45 (exprecion_simple -> signo termino adicion exprecion_simple .)
-    LE              reduce using rule 45 (exprecion_simple -> signo termino adicion exprecion_simple .)
-    DO              reduce using rule 45 (exprecion_simple -> signo termino adicion exprecion_simple .)
-    THEN            reduce using rule 45 (exprecion_simple -> signo termino adicion exprecion_simple .)
-    PARD            reduce using rule 45 (exprecion_simple -> signo termino adicion exprecion_simple .)
-    COMA            reduce using rule 45 (exprecion_simple -> signo termino adicion exprecion_simple .)
-    PCOMA           reduce using rule 45 (exprecion_simple -> signo termino adicion exprecion_simple .)
+    PCOMA           shift and go to state 121
 
 
 state 111
 
-    (40) exp -> exprecion COMA exp .
+    (40) lectura -> READLN PARI ID PARD . PCOMA
 
-    PARD            reduce using rule 40 (exp -> exprecion COMA exp .)
+    PCOMA           shift and go to state 122
 
 
 state 112
 
-    (37) escritura -> WRITE PARI exp PARD PCOMA .
+    (12) type_array -> ARRAY CORI . rango CORD OF type_simple
+    (13) rango -> . CNUM PUNTO PUNTO CNUM
 
-    END             reduce using rule 37 (escritura -> WRITE PARI exp PARD PCOMA .)
-    ID              reduce using rule 37 (escritura -> WRITE PARI exp PARD PCOMA .)
-    READ            reduce using rule 37 (escritura -> WRITE PARI exp PARD PCOMA .)
-    READLN          reduce using rule 37 (escritura -> WRITE PARI exp PARD PCOMA .)
-    WRITE           reduce using rule 37 (escritura -> WRITE PARI exp PARD PCOMA .)
-    WRITELN         reduce using rule 37 (escritura -> WRITE PARI exp PARD PCOMA .)
-    BEGIN           reduce using rule 37 (escritura -> WRITE PARI exp PARD PCOMA .)
-    IF              reduce using rule 37 (escritura -> WRITE PARI exp PARD PCOMA .)
-    WHILE           reduce using rule 37 (escritura -> WRITE PARI exp PARD PCOMA .)
-    ELSE            reduce using rule 37 (escritura -> WRITE PARI exp PARD PCOMA .)
+    CNUM            shift and go to state 123
 
+    rango                          shift and go to state 124
 
 state 113
 
-    (32) declaracion_if -> IF exprecion THEN declaracion ELSE . declaracion
+    (6) declaracion_variable -> VAR definicion DPUN type PCOMA .
+    (7) declaracion_variable -> VAR definicion DPUN type PCOMA . declaracion_variable
+    (6) declaracion_variable -> . VAR definicion DPUN type PCOMA
+    (7) declaracion_variable -> . VAR definicion DPUN type PCOMA declaracion_variable
+
+    BEGIN           reduce using rule 6 (declaracion_variable -> VAR definicion DPUN type PCOMA .)
+    VAR             shift and go to state 12
+
+    declaracion_variable           shift and go to state 125
+
+state 114
+
+    (44) exp -> exprecion COMA exp .
+
+    PARD            reduce using rule 44 (exp -> exprecion COMA exp .)
+
+
+state 115
+
+    (42) escritura -> WRITELN PARI exp PARD PCOMA .
+
+    END             reduce using rule 42 (escritura -> WRITELN PARI exp PARD PCOMA .)
+    ID              reduce using rule 42 (escritura -> WRITELN PARI exp PARD PCOMA .)
+    READ            reduce using rule 42 (escritura -> WRITELN PARI exp PARD PCOMA .)
+    READLN          reduce using rule 42 (escritura -> WRITELN PARI exp PARD PCOMA .)
+    WRITE           reduce using rule 42 (escritura -> WRITELN PARI exp PARD PCOMA .)
+    WRITELN         reduce using rule 42 (escritura -> WRITELN PARI exp PARD PCOMA .)
+    BEGIN           reduce using rule 42 (escritura -> WRITELN PARI exp PARD PCOMA .)
+    IF              reduce using rule 42 (escritura -> WRITELN PARI exp PARD PCOMA .)
+    WHILE           reduce using rule 42 (escritura -> WRITELN PARI exp PARD PCOMA .)
+    FOR             reduce using rule 42 (escritura -> WRITELN PARI exp PARD PCOMA .)
+    BREAK           reduce using rule 42 (escritura -> WRITELN PARI exp PARD PCOMA .)
+    ELSE            reduce using rule 42 (escritura -> WRITELN PARI exp PARD PCOMA .)
+    PCOMA           reduce using rule 42 (escritura -> WRITELN PARI exp PARD PCOMA .)
+
+
+state 116
+
+    (39) lectura -> READ PARI ID PARD PCOMA .
+
+    END             reduce using rule 39 (lectura -> READ PARI ID PARD PCOMA .)
+    ID              reduce using rule 39 (lectura -> READ PARI ID PARD PCOMA .)
+    READ            reduce using rule 39 (lectura -> READ PARI ID PARD PCOMA .)
+    READLN          reduce using rule 39 (lectura -> READ PARI ID PARD PCOMA .)
+    WRITE           reduce using rule 39 (lectura -> READ PARI ID PARD PCOMA .)
+    WRITELN         reduce using rule 39 (lectura -> READ PARI ID PARD PCOMA .)
+    BEGIN           reduce using rule 39 (lectura -> READ PARI ID PARD PCOMA .)
+    IF              reduce using rule 39 (lectura -> READ PARI ID PARD PCOMA .)
+    WHILE           reduce using rule 39 (lectura -> READ PARI ID PARD PCOMA .)
+    FOR             reduce using rule 39 (lectura -> READ PARI ID PARD PCOMA .)
+    BREAK           reduce using rule 39 (lectura -> READ PARI ID PARD PCOMA .)
+    ELSE            reduce using rule 39 (lectura -> READ PARI ID PARD PCOMA .)
+    PCOMA           reduce using rule 39 (lectura -> READ PARI ID PARD PCOMA .)
+
+
+state 117
+
+    (49) exprecion_simple -> signo termino adicion exprecion_simple .
+
+    EQ              reduce using rule 49 (exprecion_simple -> signo termino adicion exprecion_simple .)
+    LT              reduce using rule 49 (exprecion_simple -> signo termino adicion exprecion_simple .)
+    GT              reduce using rule 49 (exprecion_simple -> signo termino adicion exprecion_simple .)
+    GE              reduce using rule 49 (exprecion_simple -> signo termino adicion exprecion_simple .)
+    LE              reduce using rule 49 (exprecion_simple -> signo termino adicion exprecion_simple .)
+    PARD            reduce using rule 49 (exprecion_simple -> signo termino adicion exprecion_simple .)
+    DO              reduce using rule 49 (exprecion_simple -> signo termino adicion exprecion_simple .)
+    THEN            reduce using rule 49 (exprecion_simple -> signo termino adicion exprecion_simple .)
+    COMA            reduce using rule 49 (exprecion_simple -> signo termino adicion exprecion_simple .)
+    PCOMA           reduce using rule 49 (exprecion_simple -> signo termino adicion exprecion_simple .)
+
+
+state 118
+
+    (35) declaracion_while -> WHILE exprecion DO declaracion BREAK .
+
+    BREAK           reduce using rule 35 (declaracion_while -> WHILE exprecion DO declaracion BREAK .)
+    END             reduce using rule 35 (declaracion_while -> WHILE exprecion DO declaracion BREAK .)
+    ID              reduce using rule 35 (declaracion_while -> WHILE exprecion DO declaracion BREAK .)
+    READ            reduce using rule 35 (declaracion_while -> WHILE exprecion DO declaracion BREAK .)
+    READLN          reduce using rule 35 (declaracion_while -> WHILE exprecion DO declaracion BREAK .)
+    WRITE           reduce using rule 35 (declaracion_while -> WHILE exprecion DO declaracion BREAK .)
+    WRITELN         reduce using rule 35 (declaracion_while -> WHILE exprecion DO declaracion BREAK .)
+    BEGIN           reduce using rule 35 (declaracion_while -> WHILE exprecion DO declaracion BREAK .)
+    IF              reduce using rule 35 (declaracion_while -> WHILE exprecion DO declaracion BREAK .)
+    WHILE           reduce using rule 35 (declaracion_while -> WHILE exprecion DO declaracion BREAK .)
+    FOR             reduce using rule 35 (declaracion_while -> WHILE exprecion DO declaracion BREAK .)
+    ELSE            reduce using rule 35 (declaracion_while -> WHILE exprecion DO declaracion BREAK .)
+    PCOMA           reduce using rule 35 (declaracion_while -> WHILE exprecion DO declaracion BREAK .)
+
+
+state 119
+
+    (36) declaracion_for -> FOR ID ASIG CNUM TO . DO declaracion PCOMA
+    (37) declaracion_for -> FOR ID ASIG CNUM TO . DO declaracion BREAK PCOMA
+
+    DO              shift and go to state 126
+
+
+state 120
+
+    (33) declaracion_if -> IF exprecion THEN declaracion ELSE . declaracion
     (23) declaracion -> . declaracion_simple
     (24) declaracion -> . declaracion_estructurada
     (25) declaracion_simple -> . asignacion
@@ -1947,126 +2102,197 @@ state 113
     (28) declaracion_estructurada -> . declaraciones_compuesta
     (29) declaracion_estructurada -> . declaracion_if
     (30) declaracion_estructurada -> . declaracion_while
-    (34) asignacion -> . ID ASIG exprecion PCOMA
-    (35) lectura -> . READ PARI ID PARD PCOMA
-    (36) lectura -> . READLN PARI ID PARD PCOMA
-    (37) escritura -> . WRITE PARI exp PARD PCOMA
-    (38) escritura -> . WRITELN PARI exp PARD PCOMA
-    (20) declaraciones_compuesta -> . BEGIN decla END
-    (31) declaracion_if -> . IF exprecion THEN declaracion
-    (32) declaracion_if -> . IF exprecion THEN declaracion ELSE declaracion
-    (33) declaracion_while -> . WHILE exprecion DO declaracion
+    (31) declaracion_estructurada -> . declaracion_for
+    (38) asignacion -> . ID ASIG exprecion PCOMA
+    (39) lectura -> . READ PARI ID PARD PCOMA
+    (40) lectura -> . READLN PARI ID PARD PCOMA
+    (41) escritura -> . WRITE PARI exp PARD PCOMA
+    (42) escritura -> . WRITELN PARI exp PARD PCOMA
+    (20) declaraciones_compuesta -> . BEGIN cuerpo END
+    (32) declaracion_if -> . IF exprecion THEN declaracion
+    (33) declaracion_if -> . IF exprecion THEN declaracion ELSE declaracion
+    (34) declaracion_while -> . WHILE exprecion DO declaracion
+    (35) declaracion_while -> . WHILE exprecion DO declaracion BREAK
+    (36) declaracion_for -> . FOR ID ASIG CNUM TO DO declaracion PCOMA
+    (37) declaracion_for -> . FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA
 
-    ID              shift and go to state 21
-    READ            shift and go to state 13
-    READLN          shift and go to state 27
-    WRITE           shift and go to state 18
-    WRITELN         shift and go to state 24
+    ID              shift and go to state 23
+    READ            shift and go to state 14
+    READLN          shift and go to state 29
+    WRITE           shift and go to state 26
+    WRITELN         shift and go to state 13
     BEGIN           shift and go to state 6
-    IF              shift and go to state 22
-    WHILE           shift and go to state 14
+    IF              shift and go to state 24
+    WHILE           shift and go to state 15
+    FOR             shift and go to state 19
 
-    declaraciones_compuesta        shift and go to state 23
-    declaracion_while              shift and go to state 15
-    asignacion                     shift and go to state 25
-    lectura                        shift and go to state 17
-    declaracion_if                 shift and go to state 19
-    declaracion_simple             shift and go to state 20
-    declaracion_estructurada       shift and go to state 16
-    declaracion                    shift and go to state 119
-    escritura                      shift and go to state 29
-
-state 114
-
-    (38) escritura -> WRITELN PARI exp PARD PCOMA .
-
-    END             reduce using rule 38 (escritura -> WRITELN PARI exp PARD PCOMA .)
-    ID              reduce using rule 38 (escritura -> WRITELN PARI exp PARD PCOMA .)
-    READ            reduce using rule 38 (escritura -> WRITELN PARI exp PARD PCOMA .)
-    READLN          reduce using rule 38 (escritura -> WRITELN PARI exp PARD PCOMA .)
-    WRITE           reduce using rule 38 (escritura -> WRITELN PARI exp PARD PCOMA .)
-    WRITELN         reduce using rule 38 (escritura -> WRITELN PARI exp PARD PCOMA .)
-    BEGIN           reduce using rule 38 (escritura -> WRITELN PARI exp PARD PCOMA .)
-    IF              reduce using rule 38 (escritura -> WRITELN PARI exp PARD PCOMA .)
-    WHILE           reduce using rule 38 (escritura -> WRITELN PARI exp PARD PCOMA .)
-    ELSE            reduce using rule 38 (escritura -> WRITELN PARI exp PARD PCOMA .)
-
-
-state 115
-
-    (36) lectura -> READLN PARI ID PARD PCOMA .
-
-    END             reduce using rule 36 (lectura -> READLN PARI ID PARD PCOMA .)
-    ID              reduce using rule 36 (lectura -> READLN PARI ID PARD PCOMA .)
-    READ            reduce using rule 36 (lectura -> READLN PARI ID PARD PCOMA .)
-    READLN          reduce using rule 36 (lectura -> READLN PARI ID PARD PCOMA .)
-    WRITE           reduce using rule 36 (lectura -> READLN PARI ID PARD PCOMA .)
-    WRITELN         reduce using rule 36 (lectura -> READLN PARI ID PARD PCOMA .)
-    BEGIN           reduce using rule 36 (lectura -> READLN PARI ID PARD PCOMA .)
-    IF              reduce using rule 36 (lectura -> READLN PARI ID PARD PCOMA .)
-    WHILE           reduce using rule 36 (lectura -> READLN PARI ID PARD PCOMA .)
-    ELSE            reduce using rule 36 (lectura -> READLN PARI ID PARD PCOMA .)
-
-
-state 116
-
-    (13) rango -> CNUM . PUNTO PUNTO CNUM
-
-    PUNTO           shift and go to state 120
-
-
-state 117
-
-    (12) type_array -> ARRAY CORI rango . CORD OF type_simple
-
-    CORD            shift and go to state 121
-
-
-state 118
-
-    (7) declaracion_variable -> VAR dec DPUN type PCOMA declaracion_variable .
-
-    BEGIN           reduce using rule 7 (declaracion_variable -> VAR dec DPUN type PCOMA declaracion_variable .)
-
-
-state 119
-
-    (32) declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .
-
-    END             reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
-    ID              reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
-    READ            reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
-    READLN          reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
-    WRITE           reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
-    WRITELN         reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
-    BEGIN           reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
-    IF              reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
-    WHILE           reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
-    ELSE            reduce using rule 32 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
-
-
-state 120
-
-    (13) rango -> CNUM PUNTO . PUNTO CNUM
-
-    PUNTO           shift and go to state 122
-
+    declaraciones_compuesta        shift and go to state 25
+    declaracion_while              shift and go to state 16
+    asignacion                     shift and go to state 27
+    declaracion_for                shift and go to state 28
+    lectura                        shift and go to state 18
+    declaracion_if                 shift and go to state 21
+    declaracion_simple             shift and go to state 22
+    declaracion_estructurada       shift and go to state 17
+    declaracion                    shift and go to state 127
+    escritura                      shift and go to state 31
 
 state 121
 
-    (12) type_array -> ARRAY CORI rango CORD . OF type_simple
+    (41) escritura -> WRITE PARI exp PARD PCOMA .
 
-    OF              shift and go to state 123
+    END             reduce using rule 41 (escritura -> WRITE PARI exp PARD PCOMA .)
+    ID              reduce using rule 41 (escritura -> WRITE PARI exp PARD PCOMA .)
+    READ            reduce using rule 41 (escritura -> WRITE PARI exp PARD PCOMA .)
+    READLN          reduce using rule 41 (escritura -> WRITE PARI exp PARD PCOMA .)
+    WRITE           reduce using rule 41 (escritura -> WRITE PARI exp PARD PCOMA .)
+    WRITELN         reduce using rule 41 (escritura -> WRITE PARI exp PARD PCOMA .)
+    BEGIN           reduce using rule 41 (escritura -> WRITE PARI exp PARD PCOMA .)
+    IF              reduce using rule 41 (escritura -> WRITE PARI exp PARD PCOMA .)
+    WHILE           reduce using rule 41 (escritura -> WRITE PARI exp PARD PCOMA .)
+    FOR             reduce using rule 41 (escritura -> WRITE PARI exp PARD PCOMA .)
+    BREAK           reduce using rule 41 (escritura -> WRITE PARI exp PARD PCOMA .)
+    ELSE            reduce using rule 41 (escritura -> WRITE PARI exp PARD PCOMA .)
+    PCOMA           reduce using rule 41 (escritura -> WRITE PARI exp PARD PCOMA .)
 
 
 state 122
 
-    (13) rango -> CNUM PUNTO PUNTO . CNUM
+    (40) lectura -> READLN PARI ID PARD PCOMA .
 
-    CNUM            shift and go to state 124
+    END             reduce using rule 40 (lectura -> READLN PARI ID PARD PCOMA .)
+    ID              reduce using rule 40 (lectura -> READLN PARI ID PARD PCOMA .)
+    READ            reduce using rule 40 (lectura -> READLN PARI ID PARD PCOMA .)
+    READLN          reduce using rule 40 (lectura -> READLN PARI ID PARD PCOMA .)
+    WRITE           reduce using rule 40 (lectura -> READLN PARI ID PARD PCOMA .)
+    WRITELN         reduce using rule 40 (lectura -> READLN PARI ID PARD PCOMA .)
+    BEGIN           reduce using rule 40 (lectura -> READLN PARI ID PARD PCOMA .)
+    IF              reduce using rule 40 (lectura -> READLN PARI ID PARD PCOMA .)
+    WHILE           reduce using rule 40 (lectura -> READLN PARI ID PARD PCOMA .)
+    FOR             reduce using rule 40 (lectura -> READLN PARI ID PARD PCOMA .)
+    BREAK           reduce using rule 40 (lectura -> READLN PARI ID PARD PCOMA .)
+    ELSE            reduce using rule 40 (lectura -> READLN PARI ID PARD PCOMA .)
+    PCOMA           reduce using rule 40 (lectura -> READLN PARI ID PARD PCOMA .)
 
 
 state 123
+
+    (13) rango -> CNUM . PUNTO PUNTO CNUM
+
+    PUNTO           shift and go to state 128
+
+
+state 124
+
+    (12) type_array -> ARRAY CORI rango . CORD OF type_simple
+
+    CORD            shift and go to state 129
+
+
+state 125
+
+    (7) declaracion_variable -> VAR definicion DPUN type PCOMA declaracion_variable .
+
+    BEGIN           reduce using rule 7 (declaracion_variable -> VAR definicion DPUN type PCOMA declaracion_variable .)
+
+
+state 126
+
+    (36) declaracion_for -> FOR ID ASIG CNUM TO DO . declaracion PCOMA
+    (37) declaracion_for -> FOR ID ASIG CNUM TO DO . declaracion BREAK PCOMA
+    (23) declaracion -> . declaracion_simple
+    (24) declaracion -> . declaracion_estructurada
+    (25) declaracion_simple -> . asignacion
+    (26) declaracion_simple -> . lectura
+    (27) declaracion_simple -> . escritura
+    (28) declaracion_estructurada -> . declaraciones_compuesta
+    (29) declaracion_estructurada -> . declaracion_if
+    (30) declaracion_estructurada -> . declaracion_while
+    (31) declaracion_estructurada -> . declaracion_for
+    (38) asignacion -> . ID ASIG exprecion PCOMA
+    (39) lectura -> . READ PARI ID PARD PCOMA
+    (40) lectura -> . READLN PARI ID PARD PCOMA
+    (41) escritura -> . WRITE PARI exp PARD PCOMA
+    (42) escritura -> . WRITELN PARI exp PARD PCOMA
+    (20) declaraciones_compuesta -> . BEGIN cuerpo END
+    (32) declaracion_if -> . IF exprecion THEN declaracion
+    (33) declaracion_if -> . IF exprecion THEN declaracion ELSE declaracion
+    (34) declaracion_while -> . WHILE exprecion DO declaracion
+    (35) declaracion_while -> . WHILE exprecion DO declaracion BREAK
+    (36) declaracion_for -> . FOR ID ASIG CNUM TO DO declaracion PCOMA
+    (37) declaracion_for -> . FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA
+
+    ID              shift and go to state 23
+    READ            shift and go to state 14
+    READLN          shift and go to state 29
+    WRITE           shift and go to state 26
+    WRITELN         shift and go to state 13
+    BEGIN           shift and go to state 6
+    IF              shift and go to state 24
+    WHILE           shift and go to state 15
+    FOR             shift and go to state 19
+
+    declaraciones_compuesta        shift and go to state 25
+    declaracion_while              shift and go to state 16
+    asignacion                     shift and go to state 27
+    declaracion_for                shift and go to state 28
+    lectura                        shift and go to state 18
+    declaracion_if                 shift and go to state 21
+    declaracion_simple             shift and go to state 22
+    declaracion_estructurada       shift and go to state 17
+    declaracion                    shift and go to state 130
+    escritura                      shift and go to state 31
+
+state 127
+
+    (33) declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .
+
+    PCOMA           reduce using rule 33 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
+    BREAK           reduce using rule 33 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
+    END             reduce using rule 33 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
+    ID              reduce using rule 33 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
+    READ            reduce using rule 33 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
+    READLN          reduce using rule 33 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
+    WRITE           reduce using rule 33 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
+    WRITELN         reduce using rule 33 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
+    BEGIN           reduce using rule 33 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
+    IF              reduce using rule 33 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
+    WHILE           reduce using rule 33 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
+    FOR             reduce using rule 33 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
+    ELSE            reduce using rule 33 (declaracion_if -> IF exprecion THEN declaracion ELSE declaracion .)
+
+
+state 128
+
+    (13) rango -> CNUM PUNTO . PUNTO CNUM
+
+    PUNTO           shift and go to state 131
+
+
+state 129
+
+    (12) type_array -> ARRAY CORI rango CORD . OF type_simple
+
+    OF              shift and go to state 132
+
+
+state 130
+
+    (36) declaracion_for -> FOR ID ASIG CNUM TO DO declaracion . PCOMA
+    (37) declaracion_for -> FOR ID ASIG CNUM TO DO declaracion . BREAK PCOMA
+
+    PCOMA           shift and go to state 134
+    BREAK           shift and go to state 133
+
+
+state 131
+
+    (13) rango -> CNUM PUNTO PUNTO . CNUM
+
+    CNUM            shift and go to state 135
+
+
+state 132
 
     (12) type_array -> ARRAY CORI rango CORD OF . type_simple
     (14) type_simple -> . INT
@@ -2075,28 +2301,74 @@ state 123
     (17) type_simple -> . FLOAT
     (18) type_simple -> . CHAR
 
-    INT             shift and go to state 84
-    STR             shift and go to state 89
-    BOOL            shift and go to state 88
-    FLOAT           shift and go to state 85
-    CHAR            shift and go to state 86
+    INT             shift and go to state 88
+    STR             shift and go to state 93
+    BOOL            shift and go to state 92
+    FLOAT           shift and go to state 89
+    CHAR            shift and go to state 90
 
-    type_simple                    shift and go to state 125
+    type_simple                    shift and go to state 136
 
-state 124
+state 133
+
+    (37) declaracion_for -> FOR ID ASIG CNUM TO DO declaracion BREAK . PCOMA
+
+    PCOMA           shift and go to state 137
+
+
+state 134
+
+    (36) declaracion_for -> FOR ID ASIG CNUM TO DO declaracion PCOMA .
+
+    BREAK           reduce using rule 36 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion PCOMA .)
+    END             reduce using rule 36 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion PCOMA .)
+    ID              reduce using rule 36 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion PCOMA .)
+    READ            reduce using rule 36 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion PCOMA .)
+    READLN          reduce using rule 36 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion PCOMA .)
+    WRITE           reduce using rule 36 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion PCOMA .)
+    WRITELN         reduce using rule 36 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion PCOMA .)
+    BEGIN           reduce using rule 36 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion PCOMA .)
+    IF              reduce using rule 36 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion PCOMA .)
+    WHILE           reduce using rule 36 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion PCOMA .)
+    FOR             reduce using rule 36 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion PCOMA .)
+    ELSE            reduce using rule 36 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion PCOMA .)
+    PCOMA           reduce using rule 36 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion PCOMA .)
+
+
+state 135
 
     (13) rango -> CNUM PUNTO PUNTO CNUM .
 
     CORD            reduce using rule 13 (rango -> CNUM PUNTO PUNTO CNUM .)
 
 
-state 125
+state 136
 
     (12) type_array -> ARRAY CORI rango CORD OF type_simple .
 
     PCOMA           reduce using rule 12 (type_array -> ARRAY CORI rango CORD OF type_simple .)
 
+
+state 137
+
+    (37) declaracion_for -> FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA .
+
+    BREAK           reduce using rule 37 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA .)
+    END             reduce using rule 37 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA .)
+    ID              reduce using rule 37 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA .)
+    READ            reduce using rule 37 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA .)
+    READLN          reduce using rule 37 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA .)
+    WRITE           reduce using rule 37 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA .)
+    WRITELN         reduce using rule 37 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA .)
+    BEGIN           reduce using rule 37 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA .)
+    IF              reduce using rule 37 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA .)
+    WHILE           reduce using rule 37 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA .)
+    FOR             reduce using rule 37 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA .)
+    ELSE            reduce using rule 37 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA .)
+    PCOMA           reduce using rule 37 (declaracion_for -> FOR ID ASIG CNUM TO DO declaracion BREAK PCOMA .)
+
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for ELSE in state 104 resolved as shift
+WARNING: shift/reduce conflict for BREAK in state 103 resolved as shift
+WARNING: shift/reduce conflict for ELSE in state 109 resolved as shift
